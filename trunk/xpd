@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+"""eXtended Parameter Designer
+"""
+
+__author__ = "Andrey Zabolotnyi"
+__email__ = "zap@cobra.ru"
+__license__ = """
+xpd - an extended e-bike controller parameter designer tool
+Copyright (C) 2011 Andrey Zabolotnyi <zap@cobra.ru>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+import sys, os
+import gettext
+import xpdm
+
+try:
+    import serial
+except:
+    print "This program requires PySerial to run"
+    sys.exit (1)
+
+try:
+    import gtk
+    import gtk.glade
+    import gobject
+except:
+    print "This program requires PyGTK to run"
+    sys.exit (1)
+
+if __name__ == "__main__":
+    try:
+        # Additional windows-specific mumbo-jumbo
+        from xpdm import gettext_windows
+        xpdm.gettext_windows.setup_env_windows ()
+
+        # Find the language translation files
+        localedir = None
+        if not gettext.find ("xpd"):
+            localedir = os.path.join (os.path.dirname (os.path.abspath (sys.argv [0])), "locale")
+
+        # Load the language translation file for our application
+        gettext.install ("xpd", localedir)
+
+        # Also tell Glade where to look for translations
+        if localedir:
+            gtk.glade.bindtextdomain ("xpd", localedir)
+        else:
+            gtk.glade.bindtextdomain ("xpd")
+        gtk.glade.textdomain ("xpd")
+
+    except:
+        # Fallback to English
+        pass
+
+    # Load the GUI now so that translation of global statics will work
+    from xpdm import gui
+
+    app = gui.Application ()
+    gtk.main ()
