@@ -33,8 +33,6 @@ for pofile in glob.glob('po/*.po'):
         os.system("msgfmt %s -o %s" % (pofile, mofile))
     mofiles.append (('share/locale/' + lang + '/LC_MESSAGES', [mofile]))
 
-raise SystemExit, "-----------"
-
 # Patch module version in __init__.py
 ct = open ("xpdm/__init__.py").readlines ()
 for ln in range (0, len (ct)):
@@ -65,7 +63,7 @@ setup (name = 'xpd',
         package_dir = { "xpdm": "xpdm/"},
         scripts = ['xpd'],
         data_files = [
-            ('share/xpd', ['share/gui.glade', 'share/xpd.svg'] + glob.glob ('share/*.svg')),
+            ('share/xpd', ['share/gui.glade', 'share/xpd.svg'] + glob.glob ('share/*.asv')),
             ('share/applications', ['build/xpd.desktop']),
             ('share/pixmaps', ['share/xpd.svg'])
             ] + mofiles,
