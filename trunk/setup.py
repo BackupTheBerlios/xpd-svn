@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 import os, sys, glob, shutil
-
 from distutils.core import setup, Extension
+
+#if sys.platform.startswith ("win"):
+#    import py2exe
 
 VERSION = open ("VERSION").readline ().strip ()
 
@@ -40,6 +42,13 @@ for ln in range (0, len (ct)):
         ct [ln] = "VERSION = \"%s\"\n" % VERSION
 open ("xpdm/__init__.py", "w").writelines (ct)
 
+# Also patch the spec file
+ct = open ("build/xpd.spec").readlines ()
+for ln in range (0, len (ct)):
+    if ct [ln].find ("Version:") >= 0:
+        ct [ln] = "Version:        %s\n" % VERSION
+open ("build/xpd.spec", "w").writelines (ct)
+
 setup (name = 'xpd',
         version = VERSION,
         description = 'A tool for setting up Infineon-based e-bike controllers',
@@ -60,7 +69,7 @@ setup (name = 'xpd',
             'Topic :: System :: Hardware :: Hardware Drivers',
             ],
         packages = ["xpdm"],
-        package_dir = { "xpdm": "xpdm/"},
+        package_dir = { "xpdm": "xpdm" },
         scripts = ['xpd'],
         data_files = [
             ('share/xpd', ['share/gui.glade', 'share/xpd.svg'] + glob.glob ('share/*.asv')),
@@ -70,8 +79,9 @@ setup (name = 'xpd',
         long_description = """
 This program was developed to be a drop-in cross-platform replacement
 for the widely known in close circles Parameter Design tool (also known
-as Keywin e-Bike Lab), used toset the parameters of a e-bike controller
-based on the Infineon XC846 microcontroller (and various clones)."""
+as Keywin e-Bike Lab), used to set the parameters of a e-bike controller
+based on the Infineon XC846 microcontroller (and various clones).""",
+        windows = [ {"script" : "xpd"} ],
         )
 
 if op == "clean":

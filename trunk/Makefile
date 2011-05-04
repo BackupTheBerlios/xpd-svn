@@ -13,6 +13,17 @@ all:
 install:
 	python setup.py install
 
+win-install:
+	rm -rf xpd-$(VERSION)
+	mkdir xpd-$(VERSION)
+	python setup.py install -O1 --root xpd-$(VERSION)
+	mv xpd-$(VERSION)/usr/bin/xpd xpd-$(VERSION)/xpd.pyw
+	mv xpd-$(VERSION)/usr/lib/python*/site-packages/xpdm xpd-$(VERSION)
+	mv xpd-$(VERSION)/usr/share/locale xpd-$(VERSION)
+	mv xpd-$(VERSION)/usr/share/xpd xpd-$(VERSION)/share
+	rm -rf xpd-$(VERSION)/usr
+	convert -background none xpd-$(VERSION)/share/xpd.svg -resize 64 xpd-$(VERSION)/xpd.ico
+
 dist:
 	rm -rf xpd-$(VERSION)
 	mkdir xpd-$(VERSION) xpd-$(VERSION)/po \
