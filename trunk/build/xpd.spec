@@ -52,5 +52,5 @@ update-desktop-database -q
 update-desktop-database -q
 
 %changelog
-* Mon May 2 2011 Andrew Zabolotny <zap@cobra.ru> - 0.1.0-1
+* Mon May 2 2011 Andrey Zabolotnyi <zap@cobra.ru> - 0.1.0-1
 - First version of the spec file
