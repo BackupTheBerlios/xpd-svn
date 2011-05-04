@@ -137,7 +137,7 @@ ControllerParameters = {
     "ControllerType" :
     {
         # Parameter type
-        "Type"        : "i:",
+        "Type"        : "i",
         # A short user-friendly parameter description
         "Name"        : _("Controller type"),
         # Long parameter description
@@ -239,7 +239,7 @@ after a bit of rest.\
 
     "SpeedSwitchMode" :
     {
-        "Type"        : "i:",
+        "Type"        : "i",
         "Name"        : _("Speed switch mode"),
         "Description" : _("""\
 The way how the speed switch functions. When in 'switch' mode you may \
@@ -373,7 +373,7 @@ you need to connect the CR contact on the board to ground.\
 
     "SlipChargeMode" :
     {
-        "Type"        : "i:",
+        "Type"        : "i",
         "Name"        : _("Slip charge mode"),
         "Description" : _("""\
 This parameter controls regen from the throttle. If you enable it, \
@@ -388,7 +388,7 @@ electronic braking becomes ineffective (at about 15% of full speed).\
 
     "IndicatorMode" :
     {
-        "Type"        : "i:",
+        "Type"        : "i",
         "Name"        : _("LED indicator mode"),
         "Description" : _("""\
 This sets the mode of the P1, P2 and P3 contacts on the board. \
@@ -439,7 +439,7 @@ to prevent blowing out the controller MOSFETs.\
 
     "GuardLevel" :
     {
-        "Type"        : "i:",
+        "Type"        : "i",
         "Name"        : _("Guard signal polarity"),
         "Description" : _("""\
 The polarity of the Guard signal, which should be connected to the \
@@ -455,7 +455,7 @@ with a motorcycle alarm or something like that.\
 
     "ThrottleProtect" :
     {
-        "Type"        : "i:",
+        "Type"        : "i",
         "Name"        : _("Throttle blowout protect"),
         "Description" : _("""\
 Enable this parameter to let the controller check if your \
@@ -471,7 +471,7 @@ full-throttle condition, which might be not very pleasant.\
 
     "PASMode" :
     {
-        "Type"        : "i:",
+        "Type"        : "i",
         "Name"        : _("PAS mode"),
         "Description" : _("""\
 Pedal Assisted Sensor mode.\
@@ -484,7 +484,7 @@ Pedal Assisted Sensor mode.\
 
     "P3Mode" :
     {
-        "Type"        : "i:",
+        "Type"        : "i",
         "Name"        : _("P3 mode"),
         "Description" : _("""\
 An additional setting for the P3 LED output. You may select \
@@ -647,10 +647,6 @@ class Profile:
                 mask = "%%.%df" % desc.get ("Precision", 1)
                 lines.append (mask % getattr (self, parm))
 
-            # Some lines contain ":blah-blah", add at least the ':'
-            if desc ["Type"].find (':') >= 0:
-                lines [-1] += ':'
-
             # Append a CR since the file uses windows line endings
             lines [-1] += '\r'
 
@@ -722,12 +718,13 @@ class Profile:
                 hbox.pack_start (cb, False, True, 0)
                 cb.connect ("changed", self.ComboBoxChangeValue, parm, desc)
                 self.EditWidgets [parm] = cb
+
             elif desc ["Widget"] == PWT_SPINBUTTON:
                 minv, maxv = desc ["Range"]
                 spin = gtk.SpinButton (climb_rate = 1.0)
                 val = desc ["SetDisplay"] (self, self.EditParameters [parm])
                 spin.get_adjustment ().configure (val, minv, maxv, 1, 5, 0)
-                spin.set_width_chars (6)
+                spin.set_width_chars (7)
                 hbox.pack_start (spin, False, True, 0)
                 spin.connect ("output", self.SpinButtonOutput, parm, desc)
                 spin.connect ("input", self.SpinButtonInput, parm, desc)

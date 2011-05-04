@@ -109,6 +109,12 @@ class Application:
     def on_ButtonApply_clicked (self, but):
         sel = self.ProfileList.get_selection ().get_selected () [1]
         if not sel:
+            self.SetStatus (_("No profile selected"))
+            return
+
+        serport = self.ComPortsList.get_active_text ()
+        if not serport:
+            self.SetStatus (_("No serial port selected"))
             return
 
         prof = self.ProfileListStore [sel] [3]
@@ -120,7 +126,7 @@ class Application:
         self.ButtonCancelUpload.grab_add ()
         self.MainWindow.set_deletable (False)
 
-        if prof.Upload (self.ComPortsList.get_active_text (), self.UpdateProgress):
+        if prof.Upload (serport, self.UpdateProgress):
             self.SetStatus (_("Settings uploaded successfully"))
         else:
             self.SetStatus (_("Upload failed"))

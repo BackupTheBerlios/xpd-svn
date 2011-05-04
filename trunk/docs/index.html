@@ -82,6 +82,17 @@ extremely large real-world scale. This does not really mean that EB218 will
 handle phase currents up to 1300 amperes (wow) in the real world, you still have
 to make sure the actual power MOSFETs can deal properly with the selected
 currents.</dd>
+<dt>Why Parameter Designer can't load asv files saved by XPD?</dt>
+<dd>There are several variants of Parameter Designer, and one can't even
+load the files saved by another variant. The reason is that the asv format
+is utterly broken, XPD accepted it just for the reason not to create yet
+another parameter format, but this may change in the future, if PD authors
+will keep changing it with every release. The ugly thing is the way how
+Parameter Designer loads asv files: it matches not only the numeric values,
+but the textual hints (which come after a ':') as well; this means
+incompatibility between English, Chinese, French, Lyen versions of
+Parameter Designer. XPD has chosen to save just the numeric values,
+without the double-colon and textual hint after them.</dd>
 </dl>
 
 <h1>Usage</h1>

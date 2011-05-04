@@ -480,16 +480,16 @@ msgstr ""
 "Лишние данные в конце файла:\n"
 "'%(data)s'"
 
-#: xpdm/infineon.py:826
+#: xpdm/infineon.py:823
 msgid "Waiting for controller ready"
 msgstr "Ожидание готовности контроллера"
 
-#: xpdm/infineon.py:837
+#: xpdm/infineon.py:834
 #, python-format
 msgid "Invalid reply byte '%(chr)02x'"
 msgstr "Неверный ответный байт '%(chr)02x'"
 
-#: xpdm/infineon.py:840
+#: xpdm/infineon.py:837
 msgid "Waiting acknowledgement"
 msgstr "Ожидание подтверждения"
 
@@ -501,23 +501,31 @@ msgstr "ОШИБКА: Не могу найти каталог с данными"
 msgid "Ready"
 msgstr "Готов"
 
+#: xpdm/gui.py:112
+msgid "No profile selected"
+msgstr "Не выбрана конфигурация"
+
 #: xpdm/gui.py:117
+msgid "No serial port selected"
+msgstr "Порт программатора не выбран"
+
+#: xpdm/gui.py:123
 msgid "Uploading settings to controller"
 msgstr "Загрузка настроек в контроллер"
 
-#: xpdm/gui.py:124
+#: xpdm/gui.py:130
 msgid "Settings uploaded successfully"
 msgstr "Параметры успешно загружены"
 
-#: xpdm/gui.py:126
+#: xpdm/gui.py:132
 msgid "Upload failed"
 msgstr "Неудачная загрузка"
 
-#: xpdm/gui.py:158 xpdm/gui.py:202
+#: xpdm/gui.py:164 xpdm/gui.py:208
 msgid "Profile saved"
 msgstr "Конфигурация сохранена"
 
-#: xpdm/gui.py:161 xpdm/gui.py:205
+#: xpdm/gui.py:167 xpdm/gui.py:211
 #, python-format
 msgid ""
 "Failed to save profile %(desc)s:\n"
@@ -526,15 +534,15 @@ msgstr ""
 "Не удалось сохранить файл %(desc)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:163 xpdm/gui.py:207
+#: xpdm/gui.py:169 xpdm/gui.py:213
 msgid "Failed to save profile"
 msgstr "Не удалось записать конфигурацию"
 
-#: xpdm/gui.py:170
+#: xpdm/gui.py:176
 msgid "Profile renamed"
 msgstr "Конфигурация переименована"
 
-#: xpdm/gui.py:173
+#: xpdm/gui.py:179
 #, python-format
 msgid ""
 "Failed to rename profile %(desc)s:\n"
@@ -543,49 +551,49 @@ msgstr ""
 "Не удалось переименовать файл %(desc)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:175
+#: xpdm/gui.py:181
 msgid "Failed to rename profile"
 msgstr "Не удалось переименовать конфигурацию"
 
-#: xpdm/gui.py:185
+#: xpdm/gui.py:191
 msgid "New profile"
 msgstr "Новая конфигурация"
 
-#: xpdm/gui.py:224
+#: xpdm/gui.py:230
 #, python-format
 msgid "Are you sure you want to delete profile \"%s\"?"
 msgstr "Уверены, что хотите удалить конфигурацию \"%s\"?"
 
-#: xpdm/gui.py:231
+#: xpdm/gui.py:237
 msgid "Profile deleted"
 msgstr "Конфигурация удалена"
 
-#: xpdm/gui.py:234
+#: xpdm/gui.py:240
 #, python-format
 msgid "Failed to remove profile file %(fn)s"
 msgstr "Не удалось удалить файл конфигурации %(fn)s"
 
-#: xpdm/gui.py:236
+#: xpdm/gui.py:242
 msgid "Failed to delete profile"
 msgstr "Не удалось удалить конфигурацию"
 
-#: xpdm/gui.py:265
+#: xpdm/gui.py:271
 msgid "Family"
 msgstr "Семейство"
 
-#: xpdm/gui.py:271
+#: xpdm/gui.py:277
 msgid "Model"
 msgstr "Модель"
 
-#: xpdm/gui.py:277
+#: xpdm/gui.py:283
 msgid "Description"
 msgstr "Описание"
 
-#: xpdm/gui.py:302
+#: xpdm/gui.py:308
 msgid "Infineon"
 msgstr "Инфинеон"
 
-#: xpdm/gui.py:306
+#: xpdm/gui.py:312
 #, python-format
 msgid ""
 "Failed to load profile %(fn)s:\n"
