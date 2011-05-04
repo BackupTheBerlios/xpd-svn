@@ -162,7 +162,7 @@ class Application:
                 f.write ('\n'.join (lines) + '\n')
                 f.close ()
                 self.SetStatus (_("Profile saved"))
-            except IOError as e:
+            except IOError, e:
                 self.Message (gtk.MESSAGE_ERROR, \
                     _("Failed to save profile %(desc)s:\n%(msg)s") % \
                     { "desc" : prof.Description, "msg" : e })
@@ -174,7 +174,7 @@ class Application:
                 if newname != prof.Description:
                     prof.Rename (newname, True)
                     self.SetStatus (_("Profile renamed"))
-            except OSError as e:
+            except OSError, e:
                 self.Message (gtk.MESSAGE_ERROR, \
                     _("Failed to rename profile %(desc)s:\n%(msg)s") % \
                     { "desc" : prof.Description, "msg" : e })
@@ -206,7 +206,7 @@ class Application:
                 f.write ('\n'.join (lines) + '\n')
                 f.close ()
                 self.SetStatus (_("Profile saved"))
-            except IOError as e:
+            except IOError, e:
                 self.Message (gtk.MESSAGE_ERROR, \
                     _("Failed to save profile %(desc)s:\n%(msg)s") % \
                     { "desc" : prof.Description, "msg" : e })
@@ -307,7 +307,7 @@ class Application:
                 prof = self.LoadProfile (x, infineon.Profile)
                 self.ProfileListStore.append ((_("Infineon"), \
                     prof.GetModel (), prof.Description, prof))
-            except ValueError as e:
+            except ValueError, e:
                 self.Message (gtk.MESSAGE_WARNING, \
                     _("Failed to load profile %(fn)s:\n%(msg)s") % \
                     { "fn" : x, "msg" : e })

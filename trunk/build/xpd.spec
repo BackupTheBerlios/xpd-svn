@@ -38,7 +38,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc debian/changelog README TRANSLATORS
-%{python_site}/%{name}/*
+%{python_site}/%{name}m/*
 %{python_site}/%{name}-%{version}*-info
 %{_bindir}/xpd
 %{_datadir}/applications/*.desktop

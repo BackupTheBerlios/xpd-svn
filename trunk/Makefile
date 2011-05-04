@@ -27,15 +27,17 @@ win-install:
 dist:
 	rm -rf xpd-$(VERSION)
 	mkdir xpd-$(VERSION) xpd-$(VERSION)/po \
-	      xpd-$(VERSION)/share xpd-$(VERSION)/xpd \
-	      xpd-$(VERSION)/build xpd-$(VERSION)/debian
+	      xpd-$(VERSION)/share xpd-$(VERSION)/xpdm \
+	      xpd-$(VERSION)/build xpd-$(VERSION)/debian \
+	      xpd-$(VERSION)/docs
 	cp -a po/*.po* xpd-$(VERSION)/po
-	cp -a share/*.glade share/*.svg xpd-$(VERSION)/share
-	cp -a xpdm/*.py xpd-$(VERSION)/xpd
+	cp -a share/*.glade share/*.asv share/*.svg xpd-$(VERSION)/share
+	cp -a xpdm/*.py xpd-$(VERSION)/xpdm
 	cp -a build/xpd.desktop build/xpd.spec xpd-$(VERSION)/build
 	cp -a debian/* xpd-$(VERSION)/debian
+	cp -a docs/* xpd-$(VERSION)/docs
 	cp -a Makefile COPYING README TRANSLATORS VERSION \
-	      setup.py xpd xpd-$(VERSION)
+	      setup.py debug-read debug-scan-ports xpd xpd-$(VERSION)
 	tar cvjf xpd-$(VERSION).tar.bz2 xpd-$(VERSION)
 	rm -rf xpd-$(VERSION)
 
