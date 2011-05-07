@@ -823,16 +823,17 @@ class Profile:
             progress_func (msg = _("Waiting for controller ready"))
             # Sent '8's and wait for the 'U' response
             while True:
-                if not progress_func ():
-                    return False
-
                 ser.write ('8')
                 c = ser.read ()
                 if c == 'U':
                     break
+
                 if len (c) > 0:
-                    if not progress_func (msg = _("Invalid reply byte '%(chr)02x'") % { "chr" : c }):
-                        return False
+                    progress_func (msg = _("Invalid reply byte '%(chr)02x'") % { "chr" : c })
+                    return False
+
+                if not progress_func ():
+                    return False
 
             progress_func (msg = _("Waiting acknowledgement"))
             ser.write (data)
@@ -840,7 +841,12 @@ class Profile:
                 c = ser.read ()
                 if c == 'U':
                     return True
+
                 if len (c) > 0:
+                    progress_func (msg = _("Invalid reply byte '%(chr)02x'") % { "chr" : c })
+                    return False
+
+                if not progress_func ():
                     return False
 
         except serial.SerialException:

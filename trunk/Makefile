@@ -23,7 +23,7 @@ win-install:
 	mv xpd-$(VERSION)/usr/share/xpd xpd-$(VERSION)/share
 	rm -rf xpd-$(VERSION)/usr
 	convert -background none xpd-$(VERSION)/share/xpd.svg -resize 64 xpd-$(VERSION)/xpd.ico
-	zip -mr windows-xpd-$(VERSION).zip xpd-$(VERSION)
+	zip -mr xpd-$(VERSION)-windows.zip xpd-$(VERSION)
 
 dist:
 	rm -rf xpd-$(VERSION)
