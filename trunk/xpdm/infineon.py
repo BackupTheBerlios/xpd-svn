@@ -243,9 +243,10 @@ after a bit of rest.\
         "Name"        : _("Speed switch mode"),
         "Description" : _("""\
 The way how the speed switch functions. When in 'switch' mode you may \
-use a three-position switch connected to X1, X2 and X3 to select between \
-three speed limits. In 'toggle' mode by connecting (with a momentary \
-switch) X1 to ground will toggle between speeds 1 and 2.\
+use a three-position switch which connects X1 (speed 1) or X2 (speed 3) \
+to GND, or both unconnected (speed 2). In 'toggle' mode by connecting \
+(with a momentary switch) X1 to ground will toggle between speeds 1 \
+and 2 (speed 2 is the default in both setups).\
 """),
         "Default"     : SSM_SELECT,
         "Widget"      : PWT_COMBOBOX,
