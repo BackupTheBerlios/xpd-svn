@@ -43,7 +43,7 @@ if __name__ == "__main__":
     try:
         # Additional windows-specific mumbo-jumbo
         from xpdm import gettext_windows
-        xpdm.gettext_windows.setup_env_windows ()
+        xpdm.gettext_windows.setup_env ()
 
         # Find the language translation files
         localedir = None
