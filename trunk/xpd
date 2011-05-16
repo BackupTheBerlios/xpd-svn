@@ -62,7 +62,8 @@ if __name__ == "__main__":
 
     except:
         # Fallback to English
-        pass
+        import __builtin__
+        __builtin__.__dict__['_'] = unicode
 
     # Load the GUI now so that translation of global statics will work
     from xpdm import gui
