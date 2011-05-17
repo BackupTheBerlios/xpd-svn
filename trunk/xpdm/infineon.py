@@ -345,12 +345,12 @@ board contact is connected to ground.\
 The amount of time before the phase current limit takes effect  \
 Rising this parameter will help you start quicker from a dead stop, \
 but don't set this too high as you risk blowing out your motor - \
-at high currents it will quickly heat up.\
+at high currents it will quickly heat up. Set it to 0 to disable overcurrent. \
 """),
         "Default"     : 1.0,
         "Units"       : _("s"),
         "Widget"      : PWT_SPINBUTTON,
-        "Range"       : (10, 100),
+        "Range"       : (0, 100),
         "GetDisplay"  : lambda prof, v: v / 10,
         "SetDisplay"  : lambda prof, v: round (v * 10),
     },
