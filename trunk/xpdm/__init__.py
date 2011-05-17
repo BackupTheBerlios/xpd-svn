@@ -20,6 +20,3 @@ if os.name == "nt":
     from scan_windows import *
 else:
     from scan_posix import *
-
-# Translation defaults to none
-#_ = str
