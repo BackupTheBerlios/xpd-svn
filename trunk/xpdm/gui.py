@@ -197,10 +197,16 @@ class Application:
         self.ParamVBox.foreach (self.ClearChildren, self.ParamVBox)
 
 
-    def LoadProfiles (self):
+    def LoadProfiles (self, sel=None):
+        model = self.ProfileList.get_model ()
+        if not sel:
+            sel = self.ProfileList.get_selection ().get_selected () [1]
+            if sel:
+                sel = model [sel] [2]
+
         self.ProfileListStore.clear ()
-        for x in sorted (glob.glob (os.path.join (self.DATADIR, "*.asv")) + \
-                         glob.glob (os.path.join (self.CONFIGDIR, "*.asv"))):
+        for x in glob.glob (os.path.join (self.DATADIR, "*.asv")) + \
+                 glob.glob (os.path.join (self.CONFIGDIR, "*.asv")):
             try:
                 prof = self.LoadProfile (x, infineon.Profile)
                 self.ProfileListStore.append ((_("Infineon"), \
@@ -209,6 +215,14 @@ class Application:
                 self.Message (gtk.MESSAGE_WARNING, \
                     _("Failed to load profile %(fn)s:\n%(msg)s") % \
                     { "fn" : x, "msg" : e })
+
+        if sel:
+            i = model.get_iter_first ()
+            while i:
+                if model [i] [2] == sel:
+                    self.ProfileList.get_selection ().select_iter (i)
+                    break
+                i = model.iter_next (i)
 
 
     def RefreshProfiles (self):
@@ -281,7 +295,7 @@ class Application:
     def on_ButtonCreate_clicked (self, but):
         prof = infineon.Profile (_("New profile"))
         self.EditProfile (prof, True)
-        self.LoadProfiles ()
+        self.LoadProfiles (prof.Description)
 
 
     def on_ButtonCopy_clicked (self, but):
@@ -292,7 +306,7 @@ class Application:
         prof = copy.copy (self.ProfileListStore [sel] [3])
         prof.Description = _("New ") + prof.Description
         self.EditProfile (prof, True)
-        self.LoadProfiles ()
+        self.LoadProfiles (prof.Description)
 
 
     def on_ButtonDelete_clicked (self, but):
