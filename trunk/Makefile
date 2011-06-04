@@ -6,6 +6,8 @@ VERSION=$(shell cat VERSION)
 all:
 	@echo "Make one of the following targets:"
 	@echo "	install		install the library and tools"
+	@echo "	dist		build a source code distribution"
+	@echo "	win-install	build a Windows binary distribution"
 	@echo "	clean		remove all generated files"
 	@echo "	update-po	update all po files with new strings from sources"
 	@echo "	dist		make a distribution archive"
