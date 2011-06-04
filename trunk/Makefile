@@ -32,7 +32,7 @@ dist:
 	      xpd-$(VERSION)/build xpd-$(VERSION)/debian \
 	      xpd-$(VERSION)/docs
 	cp -a po/*.po* xpd-$(VERSION)/po
-	cp -a share/*.glade share/*.asv share/*.svg xpd-$(VERSION)/share
+	cp -a share/*.xml share/*.asv share/*.svg xpd-$(VERSION)/share
 	cp -a xpdm/*.py xpd-$(VERSION)/xpdm
 	cp -a build/xpd.desktop build/xpd.spec xpd-$(VERSION)/build
 	cp -a debian/* xpd-$(VERSION)/debian
@@ -50,7 +50,8 @@ clean:
 # Update translation files
 update-po: $(wildcard po/*.po)
 
-po/%.po: $(wildcard share/*.glade) $(wildcard xpdm/*.py) xpd
-	@(xgettext --omit-header $(filter %.glade,$^) -o - ; \
-	  xgettext --omit-header -L python $(filter-out %.glade,$^) -o -) | \
-	msgmerge $@ - -o $@
+po/%.po: $(wildcard share/*.xml) $(wildcard xpdm/*.py) xpd
+	xgettext --omit-header -L glade $(filter %.xml,$^) -o tmp.po
+	xgettext --omit-header -L python $(filter-out %.xml,$^) -j -o tmp.po
+	msgmerge $@ tmp.po -o $@
+	rm -f tmp.po

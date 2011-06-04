@@ -7,7 +7,8 @@ as Keywin e-Bike Lab), used toset the parameters of a e-bike controller
 based on the Infineon XC846 microcontroller (and various clones).
 
 This program is written in and requires Python, and also requires the
-PyGTK and PySerial libraries, so install them before using the program.
+PyGTK and PySerial (version 2.5 and up) libraries, so install them before
+using the program.
 
 To install the program, just execute (as root):
 

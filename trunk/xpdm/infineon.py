@@ -18,51 +18,121 @@ ControllerTypeDesc = [
         # How to translate phase current to a raw value that controller understands (0-255)
         "PhaseCurrent2Raw" : lambda I: I * 1.25 - 0.2,
         # The reverse transform: given a raw value, convert to current
-        "Raw2PhaseCurrent" : lambda V: 0.16 + (0.8 * V),
+        "Raw2PhaseCurrent" : lambda R: 0.16 + (0.8 * R),
         # How to translate battery current to a raw value in the range 0-255
         "BattCurrent2Raw"  : lambda I: I * 1.256 + 1.25,
         # How to translate a raw value to battery current
-        "Raw2BattCurrent"  : lambda V: (0.796 * V) - 0.995,
+        "Raw2BattCurrent"  : lambda R: (0.796 * R) - 0.995,
         # How to translate a voltage to a raw value
-        "Voltage2Raw"      : lambda U: U * 3.283,
+        "Voltage2Raw"      : lambda U: U * 3.281,
         # How to translate a raw value to actual voltage
-        "Raw2Voltage"      : lambda V: V / 3.283,
+        "Raw2Voltage"      : lambda R: R / 3.281,
     },
     {
         "Name"             : "EB209",
         "PhaseCurrent2Raw" : lambda I: I * 1.25 - 19.2,
-        "Raw2PhaseCurrent" : lambda V: 15.36 + (0.8 * V),
+        "Raw2PhaseCurrent" : lambda R: 15.36 + (0.8 * R),
         "BattCurrent2Raw"  : lambda I: I * 1.256 - 2.8,
-        "Raw2BattCurrent"  : lambda V: 2.229 + (0.796 * V),
-        "Voltage2Raw"      : lambda U: U * 3.283,
-        "Raw2Voltage"      : lambda V: V / 3.283,
+        "Raw2BattCurrent"  : lambda R: 2.229 + (0.796 * R),
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
     },
     {
         "Name"             : "EB212",
         "PhaseCurrent2Raw" : lambda I: I * 0.625 - 7,
-        "Raw2PhaseCurrent" : lambda V: 11.2 + (1.6 * V),
+        "Raw2PhaseCurrent" : lambda R: 11.2 + (1.6 * R),
         "BattCurrent2Raw"  : lambda I: I * 0.624 - 1.5,
-        "Raw2BattCurrent"  : lambda V: 2.404 + (1.603 * V),
-        "Voltage2Raw"      : lambda U: U * 3.283,
-        "Raw2Voltage"      : lambda V: V / 3.283,
+        "Raw2BattCurrent"  : lambda R: 2.404 + (1.603 * R),
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
     },
     {
         "Name"             : "EB215",
         "PhaseCurrent2Raw" : lambda I: I * 0.416 - 18.9,
-        "Raw2PhaseCurrent" : lambda V: 45.4327 + (2.4038 * V),
+        "Raw2PhaseCurrent" : lambda R: 45.4327 + (2.4038 * R),
         "BattCurrent2Raw"  : lambda I: I * 0.425 - 3.3,
-        "Raw2BattCurrent"  : lambda V: 7.765 + (2.353 * V),
-        "Voltage2Raw"      : lambda U: U * 3.283,
-        "Raw2Voltage"      : lambda V: V / 3.283,
+        "Raw2BattCurrent"  : lambda R: 7.765 + (2.353 * R),
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
     },
     {
         "Name"             : "EB218",
         "PhaseCurrent2Raw" : lambda I: I * 0.187 - 0.1,
-        "Raw2PhaseCurrent" : lambda V: 0.5348 + (5.3476 * V),
+        "Raw2PhaseCurrent" : lambda R: 0.5348 + (5.3476 * R),
         "BattCurrent2Raw"  : lambda I: I * 0.213 + 0.1,
-        "Raw2BattCurrent"  : lambda V: (4.695 * V) - 0.469,
-        "Voltage2Raw"      : lambda U: U * 3.283,
-        "Raw2Voltage"      : lambda V: V / 3.283,
+        "Raw2BattCurrent"  : lambda R: (4.695 * R) - 0.469,
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
+    },
+    {
+        "Name"             : "EB206/Lyen",
+        "PhaseCurrent2Raw" : lambda I: I * 1.25 - 0.2,
+        "Raw2PhaseCurrent" : lambda R: 0.16 + (0.8 * R),
+        "BattCurrent2Raw"  : lambda I: I * 1.249 - 4.26,
+        "Raw2BattCurrent"  : lambda R: 3.41 + (0.8 * R),
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
+    },
+    {
+        "Name"             : "EB209/Lyen",
+        "PhaseCurrent2Raw" : lambda I: I * 1.25 - 19.2,
+        "Raw2PhaseCurrent" : lambda R: 15.36 + (0.8 * R),
+        "BattCurrent2Raw"  : lambda I: I * 1.249 - 2.26,
+        "Raw2BattCurrent"  : lambda R: 1.81 + (0.8 * R),
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
+        # Temporary hack until someone finds out what's this
+        "Byte23"           : 80,
+    },
+    {
+        "Name"             : "EB212/Lyen",
+        "PhaseCurrent2Raw" : lambda I: I * 0.625 - 7,
+        "Raw2PhaseCurrent" : lambda R: 11.2 + (1.6 * R),
+        "BattCurrent2Raw"  : lambda I: I * 0.631 - 1.5,
+        "Raw2BattCurrent"  : lambda R: 2.38 + (1.58 * R),
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
+        "Byte23"           : 80,
+    },
+    {
+        "Name"             : "EB215/Lyen",
+        "PhaseCurrent2Raw" : lambda I: I * 0.834 - 30.1,
+        "Raw2PhaseCurrent" : lambda R: 36.09 + (1.199 * R),
+        "BattCurrent2Raw"  : lambda I: I * 0.83 - 5.86,
+        "Raw2BattCurrent"  : lambda R: 7.06 + (1.205 * R),
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
+        "Byte23"           : 80,
+    },
+    {
+        "Name"             : "EB218/Lyen",
+        "PhaseCurrent2Raw" : lambda I: I * 0.624 - 16,
+        "Raw2PhaseCurrent" : lambda R: 25.64 + (1.6 * R),
+        "BattCurrent2Raw"  : lambda I: I * 0.625 - 5,
+        "Raw2BattCurrent"  : lambda R: 8 + (1.6 * R),
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
+        "Byte23"           : 80,
+    },
+    {
+        "Name"             : "EB224/Lyen",
+        "PhaseCurrent2Raw" : lambda I: I * 0.624 - 18,
+        "Raw2PhaseCurrent" : lambda R: 28.846 + (1.6 * R),
+        "BattCurrent2Raw"  : lambda I: I * 0.627 - 4.12,
+        "Raw2BattCurrent"  : lambda R: 6.57 + (1.594 * R),
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
+        "Byte23"           : 80,
+    },
+    {
+        "Name"             : "EB232/Lyen",
+        "PhaseCurrent2Raw" : lambda I: I * 0.5 - 20.2,
+        "Raw2PhaseCurrent" : lambda R: 40.4 + (2 * R),
+        "BattCurrent2Raw"  : lambda I: I * 0.5 - 4,
+        "Raw2BattCurrent"  : lambda R: 8 + (2 * R),
+        "Voltage2Raw"      : lambda U: U * 3.281,
+        "Raw2Voltage"      : lambda R: R / 3.281,
+        "Byte23"           : 80,
     },
 ];
 
@@ -686,6 +756,8 @@ class Profile:
             if type (parm) == list:
                 expd = gtk.Expander (parm [0])
                 expd.set_expanded (True)
+                expd.set_border_width (1)
+                expd.set_spacing (3)
                 expd_vbox = gtk.VBox (False, 1)
                 expd.add (expd_vbox)
                 vbox.pack_start (expd, False, True, 0)
@@ -699,6 +771,7 @@ class Profile:
             # Place the hbox in a event box to be able to change background color
             evbox = gtk.EventBox ()
             hbox = gtk.HBox (False, 5)
+            hbox.set_border_width (2)
             evbox.add (hbox)
             evbox.set_tooltip_text (desc ["Description"])
             expd_vbox.pack_start (evbox, False, True, 0)
@@ -723,7 +796,10 @@ class Profile:
             elif desc ["Widget"] == PWT_SPINBUTTON:
                 minv, maxv = desc ["Range"]
                 spin = gtk.SpinButton (climb_rate = 1.0)
-                val = desc ["SetDisplay"] (self, self.EditParameters [parm])
+                try:
+                    val = desc ["SetDisplay"] (self, self.EditParameters [parm])
+                except IndexError:
+                    val = desc ["Default"]
                 spin.get_adjustment ().configure (val, minv, maxv, 1, 5, 0)
                 spin.set_width_chars (7)
                 hbox.pack_start (spin, False, True, 0)
@@ -786,7 +862,10 @@ class Profile:
 
 
     def GetController (self):
-        return ControllerTypeDesc [self.EditParameters ["ControllerType"] - 1]
+        try:
+            return ControllerTypeDesc [self.EditParameters ["ControllerType"] - 1]
+        except IndexError:
+            return ControllerTypeDesc [0]
 
 
     def BuildRaw (self):
@@ -805,6 +884,10 @@ class Profile:
                     x = ControllerParameters [x]["SetDisplay"] (self, getattr (self, x))
 
             data.append (int (x))
+
+        # temporary hack until someone finds out what means the 23th byte
+        if "Byte23" in ControllerTypeDesc [self.ControllerType]:
+            data [23] = ControllerTypeDesc [self.ControllerType]["Byte23"]
 
         crc = 0
         for x in data:

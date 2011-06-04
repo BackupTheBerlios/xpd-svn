@@ -72,7 +72,7 @@ setup (name = 'xpd',
         package_dir = { "xpdm": "xpdm" },
         scripts = ['xpd'],
         data_files = [
-            ('share/xpd', ['share/gui.glade', 'share/xpd.svg'] + glob.glob ('share/*.asv')),
+            ('share/xpd', ['share/gui.xml', 'share/xpd.svg'] + glob.glob ('share/*.asv')),
             ('share/applications', ['build/xpd.desktop']),
             ('share/pixmaps', ['share/xpd.svg'])
             ] + mofiles,

@@ -1,7 +1,7 @@
 %{!?python_site: %define python_site %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(0)")}
 
 Name:           xpd
-Version:        0.1.0
+Version:        0.2.0
 Release:        1%{?dist}
 Summary:        Infineon e-bike controller setup tool
 Group:          Applications/Engineering
@@ -12,7 +12,7 @@ BuildArch:      noarch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:  python
 BuildRequires:  desktop-file-utils
-Requires:       python pygtk2 pygtk2-libglade pyserial
+Requires:       python pygtk2 pyserial
 Requires:       desktop-file-utils
 
 %description
@@ -52,5 +52,8 @@ update-desktop-database -q
 update-desktop-database -q
 
 %changelog
+* Sat Jun 4 2011 Andrey Zabolotnyi <zap@cobra.ru> - 0.2.0-1
+- Get rid of the glade dependency, now using gtk.Builder
+
 * Mon May 2 2011 Andrey Zabolotnyi <zap@cobra.ru> - 0.1.0-1
 - First version of the spec file

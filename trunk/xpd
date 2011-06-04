@@ -30,13 +30,19 @@ except:
 import sys, os
 import gettext
 import xpdm
+import locale
 
 try:
     import gtk
-    import gtk.glade
     import gobject
 except:
     print "This program requires PyGTK to run"
+    sys.exit (1)
+
+# check PySerial version number
+from distutils.version import LooseVersion
+if LooseVersion (serial.VERSION) < LooseVersion ("2.5"):
+    print "This program requires PySerial version 2.5 and above"
     sys.exit (1)
 
 if __name__ == "__main__":
@@ -51,14 +57,8 @@ if __name__ == "__main__":
             localedir = os.path.join (os.path.dirname (os.path.abspath (sys.argv [0])), "locale")
 
         # Load the language translation file for our application
+        locale.bindtextdomain ("xpd", localedir)
         gettext.install ("xpd", localedir)
-
-        # Also tell Glade where to look for translations
-        if localedir:
-            gtk.glade.bindtextdomain ("xpd", localedir)
-        else:
-            gtk.glade.bindtextdomain ("xpd")
-        gtk.glade.textdomain ("xpd")
 
     except:
         # Fallback to English
@@ -68,5 +68,5 @@ if __name__ == "__main__":
     # Load the GUI now so that translation of global statics will work
     from xpdm import gui
 
-    app = gui.Application ()
+    app = gui.Application ("xpd")
     gtk.main ()

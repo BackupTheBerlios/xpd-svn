@@ -13,7 +13,7 @@ except:
     print "You must have the PySerial Python library installed for this program to work!"
     sys.exit (-1)
 
-ser = serial.Serial ("/dev/ttyUSB1", 9600, serial.EIGHTBITS, serial.PARITY_NONE,
+ser = serial.Serial ("/dev/ttyUSB2", 9600, serial.EIGHTBITS, serial.PARITY_NONE,
     serial.STOPBITS_ONE, timeout=0.5)
 
 while True:
@@ -27,6 +27,8 @@ while True:
             if not c:
                 break
             data.extend (c)
+            if len (data) >= 32:
+                break
 
         ser.write ('U')
 

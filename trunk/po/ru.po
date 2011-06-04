@@ -1,5 +1,3 @@
-# TinyAVI video conversion tool
-# Russian translation
 msgid ""
 msgstr ""
 "Project-Id-Version: XPD\n"
@@ -13,19 +11,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 
-#: share/gui.glade:7
+#: share/gui.xml:7
 msgid "eXtended Parameter Designer"
 msgstr "Расширенный редактор параметров"
 
-#: share/gui.glade:134
+#: share/gui.xml:149
 msgid "Serial port"
 msgstr "Программатор"
 
-#: share/gui.glade:184
+#: share/gui.xml:199
 msgid "Copyright (C) 2011 Andrey Zabolotnyi"
 msgstr "Авторское право (C) 2011 Андрей Заболотный"
 
-#: share/gui.glade:185
+#: share/gui.xml:200
 msgid ""
 "This program is free software: you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -54,91 +52,91 @@ msgstr ""
 "программой. В случае её отсутствия, посмотрите <http://www.gnu.org/licenses/"
 ">."
 
-#: share/gui.glade:217
+#: share/gui.xml:232
 msgid "Edit controller profile"
 msgstr "Изменение конфигурации"
 
-#: share/gui.glade:241
+#: share/gui.xml:256
 msgid "Profile name:"
 msgstr "Название конфигурации:"
 
-#: xpdm/infineon.py:74
+#: xpdm/infineon.py:144
 msgid "Auto"
 msgstr "Авто"
 
-#: xpdm/infineon.py:80
+#: xpdm/infineon.py:150
 msgid "Select"
 msgstr "Селектор"
 
-#: xpdm/infineon.py:80
+#: xpdm/infineon.py:150
 msgid "Toggle"
 msgstr "Переключатель"
 
-#: xpdm/infineon.py:88
+#: xpdm/infineon.py:158
 msgid "Common VCC"
 msgstr "Общая VCC"
 
-#: xpdm/infineon.py:88
+#: xpdm/infineon.py:158
 msgid "Common GND"
 msgstr "Общая GND"
 
-#: xpdm/infineon.py:88
+#: xpdm/infineon.py:158
 msgid "164 Mode P1-DAT P2-CLK"
 msgstr ""
 
-#: xpdm/infineon.py:94
+#: xpdm/infineon.py:164
 msgid "Enable"
 msgstr "Включено"
 
-#: xpdm/infineon.py:94
+#: xpdm/infineon.py:164
 msgid "Disable"
 msgstr "Выключено"
 
-#: xpdm/infineon.py:101 xpdm/infineon.py:113
+#: xpdm/infineon.py:171 xpdm/infineon.py:183
 msgid "Disabled"
 msgstr "Отключено"
 
-#: xpdm/infineon.py:101
+#: xpdm/infineon.py:171
 msgid "Moderate"
 msgstr "Средний"
 
-#: xpdm/infineon.py:101
+#: xpdm/infineon.py:171
 msgid "Strong"
 msgstr "Высокий"
 
-#: xpdm/infineon.py:107
+#: xpdm/infineon.py:177
 msgid "Low"
 msgstr "Низкий"
 
-#: xpdm/infineon.py:107
+#: xpdm/infineon.py:177
 msgid "High"
 msgstr "Высокий"
 
-#: xpdm/infineon.py:113
+#: xpdm/infineon.py:183
 msgid "Enabled"
 msgstr "Включено"
 
-#: xpdm/infineon.py:119
+#: xpdm/infineon.py:189
 msgid "Fast"
 msgstr "Быстрый"
 
-#: xpdm/infineon.py:119
+#: xpdm/infineon.py:189
 msgid "Slow"
 msgstr "Медленный"
 
-#: xpdm/infineon.py:125
+#: xpdm/infineon.py:195
 msgid "Cruise"
 msgstr "Круиз"
 
-#: xpdm/infineon.py:125
+#: xpdm/infineon.py:195
 msgid "Cruise & Failure code"
 msgstr "Круиз & Код ошибки"
 
-#: xpdm/infineon.py:142
+#: xpdm/infineon.py:212
 msgid "Controller type"
 msgstr "Тип контроллера"
 
-#: xpdm/infineon.py:144
+#: xpdm/infineon.py:214
 msgid ""
 "The type of your controller. This influences the coefficients assumed for "
 "various parts of the controller, e.g. shunts, resistive dividers. If you "
@@ -148,11 +146,11 @@ msgstr ""
 "некоторых частей схемы, например шунтов и резисторных делителей. Если Ваш "
 "контроллер нестандартный, Вы можете добавить свой тип в infineon.py"
 
-#: xpdm/infineon.py:162
+#: xpdm/infineon.py:232
 msgid "Phase current limit"
 msgstr "Ограничение фазного тока"
 
-#: xpdm/infineon.py:163
+#: xpdm/infineon.py:233
 msgid ""
 "The current limit in motor phase wires. Since the e-bike controller is, in a "
 "sense, a step-down DC-DC converter, the motor current can actually be much "
@@ -165,15 +163,15 @@ msgstr ""
 "Удостоверьтесь, что данный параметр не превышает максимально допустимого "
 "значения для выходных КМОП ключей."
 
-#: xpdm/infineon.py:173 xpdm/infineon.py:193
+#: xpdm/infineon.py:243 xpdm/infineon.py:263
 msgid "A"
 msgstr "А"
 
-#: xpdm/infineon.py:185
+#: xpdm/infineon.py:255
 msgid "Battery current limit"
 msgstr "Ограничение тока батареи"
 
-#: xpdm/infineon.py:186
+#: xpdm/infineon.py:256
 msgid ""
 "The limit for the current drawn out of the battery. Make sure this does not "
 "exceed the specs for your battery, otherwise you will lose a lot of energy "
@@ -184,11 +182,11 @@ msgstr ""
 "Вы потеряете много энергии на разогрев батареи, можете её повредить и даже "
 "спровоцировать взрыв (для некоторых типов аккумуляторов)."
 
-#: xpdm/infineon.py:203
+#: xpdm/infineon.py:273
 msgid "Battery low voltage"
 msgstr "Минимальное напряжение батареи"
 
-#: xpdm/infineon.py:204
+#: xpdm/infineon.py:274
 msgid ""
 "The voltage at which controller cuts of the power. Make sure this is at "
 "least equal to lowest_cell_voltage x cell_count (e.g. for a 12S LiFePO4 "
@@ -204,15 +202,15 @@ msgstr ""
 "отключит нагрузку как только напряжение на *любой* из ячеек достигнет "
 "минимально допустимого."
 
-#: xpdm/infineon.py:214 xpdm/infineon.py:233 xpdm/infineon.py:434
+#: xpdm/infineon.py:284 xpdm/infineon.py:303 xpdm/infineon.py:504
 msgid "V"
 msgstr "В"
 
-#: xpdm/infineon.py:224
+#: xpdm/infineon.py:294
 msgid "Battery low voltage threshold"
 msgstr "Порог минимального напряжения"
 
-#: xpdm/infineon.py:225
+#: xpdm/infineon.py:295
 msgid ""
 "The amount of volts for the battery voltage to rise after a cutoff due to "
 "low voltage for the controller to restore power back. This is most useful "
@@ -224,11 +222,11 @@ msgstr ""
 "аккумуляторов (последние имеют свойство слегка восстанавливаться после "
 "\"отдыха\")."
 
-#: xpdm/infineon.py:243
+#: xpdm/infineon.py:313
 msgid "Speed switch mode"
 msgstr "Режим переключателя скорости"
 
-#: xpdm/infineon.py:244
+#: xpdm/infineon.py:314
 msgid ""
 "The way how the speed switch functions. When in 'switch' mode you may use a "
 "three-position switch which connects X1 (speed 1) or X2 (speed 3) to GND, or "
@@ -244,38 +242,38 @@ msgstr ""
 "землю, между скоростями 1 и 2 (скорость 2 включается по умолчанию в обоих "
 "режимах)."
 
-#: xpdm/infineon.py:260
+#: xpdm/infineon.py:330
 msgid "Speed 1"
 msgstr "Скорость 1"
 
-#: xpdm/infineon.py:261
+#: xpdm/infineon.py:331
 msgid "The first speed limit.(see comment to 'speed switch mode')."
 msgstr ""
 "Первое ограничение скорости (см. комментарий к 'режиму переключателя')."
 
-#: xpdm/infineon.py:276
+#: xpdm/infineon.py:346
 msgid "Speed 2"
 msgstr "Скорость 2"
 
-#: xpdm/infineon.py:277
+#: xpdm/infineon.py:347
 msgid "The second speed limit.(see comment to 'speed switch mode')."
 msgstr ""
 "Второе ограничение скорости (см. комментарий к 'режиму переключателя')."
 
-#: xpdm/infineon.py:292
+#: xpdm/infineon.py:362
 msgid "Speed 3"
 msgstr "Скорость 3"
 
-#: xpdm/infineon.py:293
+#: xpdm/infineon.py:363
 msgid "The third speed limit.(see comment to 'speed switch mode')."
 msgstr ""
 "Третье ограничение скорости (см. комментарий к 'режиму переключателя')."
 
-#: xpdm/infineon.py:308
+#: xpdm/infineon.py:378
 msgid "Limited speed"
 msgstr "Ограниченная скорость"
 
-#: xpdm/infineon.py:309
+#: xpdm/infineon.py:379
 msgid ""
 "The speed corresponding to 100% throttle when the 'speed limit' switch/wires "
 "are enabled (when the 'SL' board contact is connected to ground)."
@@ -283,11 +281,11 @@ msgstr ""
 "Скорость при полном повороте ручки газа в режиме 'ограничения скорости' (при "
 "соединении точки SL на плате к земле), в процентах от максимальной."
 
-#: xpdm/infineon.py:326
+#: xpdm/infineon.py:396
 msgid "Reverse speed"
 msgstr "Задняя скорость"
 
-#: xpdm/infineon.py:327
+#: xpdm/infineon.py:397
 msgid ""
 "The speed at which motor runs in reverse direction when the DX3 board "
 "contact is connected to ground."
@@ -295,11 +293,11 @@ msgstr ""
 "Максимальная скорость вращения в процентах от максимальной в режиме заднего "
 "хода (включаемого подключением точки DX3 на плате к земле)."
 
-#: xpdm/infineon.py:343
+#: xpdm/infineon.py:413
 msgid "Overcurrent detection delay"
 msgstr "Задержка отсечки по току"
 
-#: xpdm/infineon.py:344
+#: xpdm/infineon.py:414
 msgid ""
 "The amount of time before the phase current limit takes effect  Rising this "
 "parameter will help you start quicker from a dead stop, but don't set this "
@@ -311,15 +309,15 @@ msgstr ""
 "иначе рискуете спалить мотор - при больших токах он быстро нагреется. "
 "Установите в 0 для отключения данной возможности."
 
-#: xpdm/infineon.py:351 xpdm/infineon.py:368
+#: xpdm/infineon.py:421 xpdm/infineon.py:438
 msgid "s"
 msgstr "с"
 
-#: xpdm/infineon.py:361
+#: xpdm/infineon.py:431
 msgid "Auto cruising time"
 msgstr "Задержка авто-круиза"
 
-#: xpdm/infineon.py:362
+#: xpdm/infineon.py:432
 msgid ""
 "The amount of seconds to hold the throttle position unchanged before the "
 "'cruising' mode will be enabled. For this to work you need to connect the CR "
@@ -329,11 +327,11 @@ msgstr ""
 "включения режима круиза. Чтобы это работало Вам необходимо соединить контакт "
 "CR на плате с землёй."
 
-#: xpdm/infineon.py:378
+#: xpdm/infineon.py:448
 msgid "Slip charge mode"
 msgstr "Зарядка при сбросе скорости"
 
-#: xpdm/infineon.py:379
+#: xpdm/infineon.py:449
 #, python-format
 msgid ""
 "This parameter controls regen from the throttle. If you enable it, "
@@ -344,11 +342,11 @@ msgstr ""
 "рекуперации до тех пор, пока Ваша скорость выше затребованной (ниже примерно "
 "15% скорости регенерация в любом случае неэффективна)."
 
-#: xpdm/infineon.py:393
+#: xpdm/infineon.py:463
 msgid "LED indicator mode"
 msgstr "Режим светодиодного индикатора"
 
-#: xpdm/infineon.py:394
+#: xpdm/infineon.py:464
 msgid ""
 "This sets the mode of the P1, P2 and P3 contacts on the board. The connected "
 "LEDs may use either a common GND or common VCC."
@@ -357,11 +355,11 @@ msgstr ""
 "Подсоединённые светодиоды могут быть подключены к общей земле, либо к общему "
 "питанию."
 
-#: xpdm/infineon.py:407
+#: xpdm/infineon.py:477
 msgid "EBS level"
 msgstr "Уровень рекуперации"
 
-#: xpdm/infineon.py:408
+#: xpdm/infineon.py:478
 msgid ""
 "Electronic braking level. Choose 'Moderate' for smaller wheel diameters, and "
 "'Strong' for 26\" and up. The larger is the level, the more effective is "
@@ -371,11 +369,11 @@ msgstr ""
 "Выберите 'Средний' уровень для колёс с малым диаметром и 'Высокий' уровень "
 "для колёс диаметром 26 дюйма и выше."
 
-#: xpdm/infineon.py:424
+#: xpdm/infineon.py:494
 msgid "EBS limit voltage"
 msgstr "Макс. напряжение рекуперации"
 
-#: xpdm/infineon.py:425
+#: xpdm/infineon.py:495
 msgid ""
 "When regen is enabled (also known as electronic braking system) the "
 "controller effectively acts as a step-up DC-DC converter, transferring "
@@ -388,11 +386,11 @@ msgstr ""
 "максимальное выходное напряжение этого преобразователя. Удостоверьтесь, что "
 "это напряжение не превышает возможности выходных КМОП ключей контроллера."
 
-#: xpdm/infineon.py:444
+#: xpdm/infineon.py:514
 msgid "Guard signal polarity"
 msgstr "Уровень сигнала блокировки"
 
-#: xpdm/infineon.py:445
+#: xpdm/infineon.py:515
 msgid ""
 "The polarity of the Guard signal, which should be connected to the TB pin on "
 "the board  When Guard is active, controller will prevent rotating the wheel "
@@ -403,11 +401,11 @@ msgstr ""
 "(в режиме 'Низкий') или к питанию (в режиме 'Высокий'). В этом режиме "
 "контроллер активно препятствует изменению позиции колеса (активно тормозит)."
 
-#: xpdm/infineon.py:460
+#: xpdm/infineon.py:530
 msgid "Throttle blowout protect"
 msgstr "Защита от неисправности ручки газа"
 
-#: xpdm/infineon.py:461
+#: xpdm/infineon.py:531
 msgid ""
 "Enable this parameter to let the controller check if your throttle output is "
 "sane (e.g. if the Hall sensor in the throttle is not blown out). If it is "
@@ -418,19 +416,19 @@ msgstr ""
 "в ручке газа. В случае перегорания выходного транзистора датчика контроллер "
 "может вдруг дать полный газ, что неприятно."
 
-#: xpdm/infineon.py:476
+#: xpdm/infineon.py:546
 msgid "PAS mode"
 msgstr "Режим помощи педалям"
 
-#: xpdm/infineon.py:477
+#: xpdm/infineon.py:547
 msgid "Pedal Assisted Sensor mode."
 msgstr "Режим работы датчика вращения педалей."
 
-#: xpdm/infineon.py:489
+#: xpdm/infineon.py:559
 msgid "P3 mode"
 msgstr "Режим контакта P3"
 
-#: xpdm/infineon.py:490
+#: xpdm/infineon.py:560
 msgid ""
 "An additional setting for the P3 LED output. You may select between "
 "displaying only the \"Cruise\" mode on this LED, or both \"Cruise\" and "
@@ -440,11 +438,11 @@ msgstr ""
 "отображением только режима 'Круиз', или также можете вывести на данный "
 "светодиод диагностический код ошибки в случае какого-либо сбоя контроллера."
 
-#: xpdm/infineon.py:504
+#: xpdm/infineon.py:574
 msgid "Hall sensors angle"
 msgstr "Угол между датчиками Холла"
 
-#: xpdm/infineon.py:505
+#: xpdm/infineon.py:575
 msgid ""
 "The (electric) angle between Hall sensors in your motor. Most motors use "
 "sensors at 120 degrees, but sometimes this may differ. Choose \"Auto\" if "
@@ -455,27 +453,27 @@ msgstr ""
 "встретиться и другие. Выберите режим \"Авто\" для автоматического "
 "определения угла."
 
-#: xpdm/infineon.py:534
+#: xpdm/infineon.py:604
 msgid "Hardware type"
 msgstr "Тип контроллера"
 
-#: xpdm/infineon.py:537
+#: xpdm/infineon.py:607
 msgid "Current/Voltage design"
 msgstr "Токи и напряжения"
 
-#: xpdm/infineon.py:544
+#: xpdm/infineon.py:614
 msgid "Speed modes"
 msgstr "Скоростной режим"
 
-#: xpdm/infineon.py:552
+#: xpdm/infineon.py:622
 msgid "Regeneration"
 msgstr "Настройки рекуперации"
 
-#: xpdm/infineon.py:557
+#: xpdm/infineon.py:627
 msgid "External devices"
 msgstr "Внешние устройства"
 
-#: xpdm/infineon.py:628
+#: xpdm/infineon.py:698
 #, python-format
 msgid ""
 "Extra data at the end of file:\n"
@@ -484,16 +482,16 @@ msgstr ""
 "Лишние данные в конце файла:\n"
 "'%(data)s'"
 
-#: xpdm/infineon.py:824
+#: xpdm/infineon.py:907
 msgid "Waiting for controller ready"
 msgstr "Ожидание готовности контроллера"
 
-#: xpdm/infineon.py:833 xpdm/infineon.py:847
+#: xpdm/infineon.py:916 xpdm/infineon.py:930
 #, python-format
 msgid "Invalid reply byte '%(chr)02x'"
 msgstr "Неверный ответный байт '%(chr)02x'"
 
-#: xpdm/infineon.py:839
+#: xpdm/infineon.py:922
 msgid "Waiting acknowledgement"
 msgstr "Ожидание подтверждения"
 
@@ -501,35 +499,27 @@ msgstr "Ожидание подтверждения"
 msgid "FATAL: Could not find data directory"
 msgstr "ОШИБКА: Не могу найти каталог с данными"
 
-#: xpdm/gui.py:83
+#: xpdm/gui.py:80
 msgid "Ready"
 msgstr "Готов"
 
-#: xpdm/gui.py:112
-msgid "No profile selected"
-msgstr "Не выбрана конфигурация"
+#: xpdm/gui.py:107
+msgid "Family"
+msgstr "Семейство"
 
-#: xpdm/gui.py:117
-msgid "No serial port selected"
-msgstr "Порт программатора не выбран"
+#: xpdm/gui.py:113
+msgid "Model"
+msgstr "Модель"
 
-#: xpdm/gui.py:123
-msgid "Uploading settings to controller"
-msgstr "Загрузка настроек в контроллер"
+#: xpdm/gui.py:119
+msgid "Description"
+msgstr "Описание"
 
-#: xpdm/gui.py:130
-msgid "Settings uploaded successfully"
-msgstr "Параметры успешно загружены"
-
-#: xpdm/gui.py:132
-msgid "Upload failed"
-msgstr "Неудачная загрузка"
-
-#: xpdm/gui.py:164 xpdm/gui.py:208
+#: xpdm/gui.py:169
 msgid "Profile saved"
 msgstr "Конфигурация сохранена"
 
-#: xpdm/gui.py:167 xpdm/gui.py:211
+#: xpdm/gui.py:172
 #, python-format
 msgid ""
 "Failed to save profile %(desc)s:\n"
@@ -538,15 +528,15 @@ msgstr ""
 "Не удалось сохранить файл %(desc)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:169 xpdm/gui.py:213
+#: xpdm/gui.py:174
 msgid "Failed to save profile"
 msgstr "Не удалось записать конфигурацию"
 
-#: xpdm/gui.py:176
+#: xpdm/gui.py:181
 msgid "Profile renamed"
 msgstr "Конфигурация переименована"
 
-#: xpdm/gui.py:179
+#: xpdm/gui.py:184
 #, python-format
 msgid ""
 "Failed to rename profile %(desc)s:\n"
@@ -555,49 +545,15 @@ msgstr ""
 "Не удалось переименовать файл %(desc)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:181
+#: xpdm/gui.py:186
 msgid "Failed to rename profile"
 msgstr "Не удалось переименовать конфигурацию"
 
-#: xpdm/gui.py:191
-msgid "New profile"
-msgstr "Новая конфигурация"
-
-#: xpdm/gui.py:230
-#, python-format
-msgid "Are you sure you want to delete profile \"%s\"?"
-msgstr "Уверены, что хотите удалить конфигурацию \"%s\"?"
-
-#: xpdm/gui.py:237
-msgid "Profile deleted"
-msgstr "Конфигурация удалена"
-
-#: xpdm/gui.py:240
-#, python-format
-msgid "Failed to remove profile file %(fn)s"
-msgstr "Не удалось удалить файл конфигурации %(fn)s"
-
-#: xpdm/gui.py:242
-msgid "Failed to delete profile"
-msgstr "Не удалось удалить конфигурацию"
-
-#: xpdm/gui.py:271
-msgid "Family"
-msgstr "Семейство"
-
-#: xpdm/gui.py:277
-msgid "Model"
-msgstr "Модель"
-
-#: xpdm/gui.py:283
-msgid "Description"
-msgstr "Описание"
-
-#: xpdm/gui.py:308
+#: xpdm/gui.py:201
 msgid "Infineon"
 msgstr "Инфинеон"
 
-#: xpdm/gui.py:312
+#: xpdm/gui.py:205
 #, python-format
 msgid ""
 "Failed to load profile %(fn)s:\n"
@@ -605,3 +561,49 @@ msgid ""
 msgstr ""
 "Ошибка загрузки конфигурации %(fn)s:\n"
 "%(msg)s"
+
+#: xpdm/gui.py:239
+msgid "No profile selected"
+msgstr "Не выбрана конфигурация"
+
+#: xpdm/gui.py:244
+msgid "No serial port selected"
+msgstr "Порт программатора не выбран"
+
+#: xpdm/gui.py:250
+msgid "Uploading settings to controller"
+msgstr "Загрузка настроек в контроллер"
+
+#: xpdm/gui.py:257
+msgid "Settings uploaded successfully"
+msgstr "Параметры успешно загружены"
+
+#: xpdm/gui.py:259
+msgid "Upload failed"
+msgstr "Неудачная загрузка"
+
+#: xpdm/gui.py:277
+msgid "New profile"
+msgstr "Новая конфигурация"
+
+#: xpdm/gui.py:288
+msgid "New "
+msgstr "Новый "
+
+#: xpdm/gui.py:302
+#, python-format
+msgid "Are you sure you want to delete profile \"%s\"?"
+msgstr "Уверены, что хотите удалить конфигурацию \"%s\"?"
+
+#: xpdm/gui.py:309
+msgid "Profile deleted"
+msgstr "Конфигурация удалена"
+
+#: xpdm/gui.py:312
+#, python-format
+msgid "Failed to remove profile file %(fn)s"
+msgstr "Не удалось удалить файл конфигурации %(fn)s"
+
+#: xpdm/gui.py:314
+msgid "Failed to delete profile"
+msgstr "Не удалось удалить конфигурацию"

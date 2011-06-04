@@ -1,6 +1,3 @@
-# TinyAVI video conversion tool
-#
-
 msgid ""
 msgstr ""
 "Project-Id-Version: XPD\n"
