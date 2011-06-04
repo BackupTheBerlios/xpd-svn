@@ -28,6 +28,7 @@
                     <property name="height_request">240</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="search_column">2</property>
                   </object>
                 </child>
               </object>

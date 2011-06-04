@@ -107,19 +107,24 @@ class Application:
         column = gtk.TreeViewColumn (_("Family"), gtk.CellRendererText (), text = 0)
         column.set_sizing (gtk.TREE_VIEW_COLUMN_FIXED)
         column.set_resizable (True)
-        column.set_min_width (80)
+        column.set_sort_column_id (0)
+        column.set_min_width (100)
         self.ProfileList.append_column (column)
 
         column = gtk.TreeViewColumn (_("Model"), gtk.CellRendererText (), text = 1)
         column.set_sizing (gtk.TREE_VIEW_COLUMN_FIXED)
         column.set_resizable (True)
+        column.set_sort_column_id (1)
         column.set_min_width (120)
         self.ProfileList.append_column (column)
 
         column = gtk.TreeViewColumn (_("Description"), gtk.CellRendererText (), text = 2)
         column.set_sizing (gtk.TREE_VIEW_COLUMN_FIXED)
         column.set_resizable (True)
+        column.set_sort_column_id (2)
         self.ProfileList.append_column (column)
+
+        self.ProfileListStore.set_sort_column_id (1, gtk.SORT_ASCENDING)
 
 
     def ScanComPorts (self):
