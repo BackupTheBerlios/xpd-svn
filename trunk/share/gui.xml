@@ -198,6 +198,8 @@
     <property name="type_hint">normal</property>
     <property name="program_name">eXtended Parameter Designer</property>
     <property name="copyright" translatable="yes">Copyright (C) 2011 Andrey Zabolotnyi</property>
+    <property name="comments" translatable="yes">A tool for setting up "Infineon" e-bike controllers</property>
+    <property name="website">http://xpd.berlios.de</property>
     <property name="license" translatable="yes">This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.

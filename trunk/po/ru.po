@@ -15,15 +15,19 @@ msgstr ""
 msgid "eXtended Parameter Designer"
 msgstr "Расширенный редактор параметров"
 
-#: share/gui.xml:149
+#: share/gui.xml:150
 msgid "Serial port"
 msgstr "Программатор"
 
-#: share/gui.xml:199
+#: share/gui.xml:200
 msgid "Copyright (C) 2011 Andrey Zabolotnyi"
 msgstr "Авторское право (C) 2011 Андрей Заболотный"
 
-#: share/gui.xml:200
+#: share/gui.xml:201
+msgid "A tool for setting up \"Infineon\" e-bike controllers"
+msgstr "Утилита настройки контроллеров \"Инфинеон\" для элвелов"
+
+#: share/gui.xml:203
 msgid ""
 "This program is free software: you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -52,11 +56,11 @@ msgstr ""
 "программой. В случае её отсутствия, посмотрите <http://www.gnu.org/licenses/"
 ">."
 
-#: share/gui.xml:232
+#: share/gui.xml:235
 msgid "Edit controller profile"
 msgstr "Изменение конфигурации"
 
-#: share/gui.xml:256
+#: share/gui.xml:259
 msgid "Profile name:"
 msgstr "Название конфигурации:"
 
@@ -507,19 +511,19 @@ msgstr "Готов"
 msgid "Family"
 msgstr "Семейство"
 
-#: xpdm/gui.py:113
+#: xpdm/gui.py:114
 msgid "Model"
 msgstr "Модель"
 
-#: xpdm/gui.py:119
+#: xpdm/gui.py:121
 msgid "Description"
 msgstr "Описание"
 
-#: xpdm/gui.py:169
+#: xpdm/gui.py:174
 msgid "Profile saved"
 msgstr "Конфигурация сохранена"
 
-#: xpdm/gui.py:172
+#: xpdm/gui.py:177
 #, python-format
 msgid ""
 "Failed to save profile %(desc)s:\n"
@@ -528,15 +532,15 @@ msgstr ""
 "Не удалось сохранить файл %(desc)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:174
+#: xpdm/gui.py:179
 msgid "Failed to save profile"
 msgstr "Не удалось записать конфигурацию"
 
-#: xpdm/gui.py:181
+#: xpdm/gui.py:186
 msgid "Profile renamed"
 msgstr "Конфигурация переименована"
 
-#: xpdm/gui.py:184
+#: xpdm/gui.py:189
 #, python-format
 msgid ""
 "Failed to rename profile %(desc)s:\n"
@@ -545,15 +549,15 @@ msgstr ""
 "Не удалось переименовать файл %(desc)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:186
+#: xpdm/gui.py:191
 msgid "Failed to rename profile"
 msgstr "Не удалось переименовать конфигурацию"
 
-#: xpdm/gui.py:201
+#: xpdm/gui.py:206
 msgid "Infineon"
 msgstr "Инфинеон"
 
-#: xpdm/gui.py:205
+#: xpdm/gui.py:210
 #, python-format
 msgid ""
 "Failed to load profile %(fn)s:\n"
@@ -562,48 +566,48 @@ msgstr ""
 "Ошибка загрузки конфигурации %(fn)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:239
+#: xpdm/gui.py:244
 msgid "No profile selected"
 msgstr "Не выбрана конфигурация"
 
-#: xpdm/gui.py:244
+#: xpdm/gui.py:249
 msgid "No serial port selected"
 msgstr "Порт программатора не выбран"
 
-#: xpdm/gui.py:250
+#: xpdm/gui.py:255
 msgid "Uploading settings to controller"
 msgstr "Загрузка настроек в контроллер"
 
-#: xpdm/gui.py:257
+#: xpdm/gui.py:262
 msgid "Settings uploaded successfully"
 msgstr "Параметры успешно загружены"
 
-#: xpdm/gui.py:259
+#: xpdm/gui.py:264
 msgid "Upload failed"
 msgstr "Неудачная загрузка"
 
-#: xpdm/gui.py:277
+#: xpdm/gui.py:282
 msgid "New profile"
 msgstr "Новая конфигурация"
 
-#: xpdm/gui.py:288
+#: xpdm/gui.py:293
 msgid "New "
 msgstr "Новый "
 
-#: xpdm/gui.py:302
+#: xpdm/gui.py:307
 #, python-format
 msgid "Are you sure you want to delete profile \"%s\"?"
 msgstr "Уверены, что хотите удалить конфигурацию \"%s\"?"
 
-#: xpdm/gui.py:309
+#: xpdm/gui.py:314
 msgid "Profile deleted"
 msgstr "Конфигурация удалена"
 
-#: xpdm/gui.py:312
+#: xpdm/gui.py:317
 #, python-format
 msgid "Failed to remove profile file %(fn)s"
 msgstr "Не удалось удалить файл конфигурации %(fn)s"
 
-#: xpdm/gui.py:314
+#: xpdm/gui.py:319
 msgid "Failed to delete profile"
 msgstr "Не удалось удалить конфигурацию"
