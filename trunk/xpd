@@ -57,8 +57,17 @@ if __name__ == "__main__":
             localedir = os.path.join (os.path.dirname (os.path.abspath (sys.argv [0])), "locale")
 
         # Load the language translation file for our application
-        locale.bindtextdomain ("xpd", localedir)
         gettext.install ("xpd", localedir)
+
+        # Set the translation domain for libintl (Python uses its own locale library)
+        try:
+            locale.bindtextdomain ("xpd", localedir)
+        except AttributeError:
+            # hack: windows locale doesn't contain bindtextdomain
+            import ctypes
+            libintl = ctypes.cdll.LoadLibrary ("intl.dll")
+            libintl.bindtextdomain ('xpd', localedir)
+            libintl.bind_textdomain_codeset ('xpd', 'utf-8')
 
     except:
         # Fallback to English
