@@ -7,7 +7,7 @@ import serial
 print "-"*78
 print "Serial ports"
 print "-"*78
-for order, port, desc, hwid in sorted(xpdm.comports()):
+for order, port, desc, hwid in sorted (xpdm.comports ()):
     print "%-10s: %s (%s) ->" % (port, desc, hwid),
     try:
         serial.Serial(port) # test open

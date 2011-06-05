@@ -486,16 +486,16 @@ msgstr ""
 "Лишние данные в конце файла:\n"
 "'%(data)s'"
 
-#: xpdm/infineon.py:907
+#: xpdm/infineon.py:906
 msgid "Waiting for controller ready"
 msgstr "Ожидание готовности контроллера"
 
-#: xpdm/infineon.py:916 xpdm/infineon.py:930
+#: xpdm/infineon.py:915 xpdm/infineon.py:928
 #, python-format
 msgid "Invalid reply byte '%(chr)02x'"
 msgstr "Неверный ответный байт '%(chr)02x'"
 
-#: xpdm/infineon.py:922
+#: xpdm/infineon.py:920
 msgid "Waiting acknowledgement"
 msgstr "Ожидание подтверждения"
 
@@ -553,11 +553,11 @@ msgstr ""
 msgid "Failed to rename profile"
 msgstr "Не удалось переименовать конфигурацию"
 
-#: xpdm/gui.py:206
+#: xpdm/gui.py:212
 msgid "Infineon"
 msgstr "Инфинеон"
 
-#: xpdm/gui.py:210
+#: xpdm/gui.py:216
 #, python-format
 msgid ""
 "Failed to load profile %(fn)s:\n"
@@ -566,48 +566,62 @@ msgstr ""
 "Ошибка загрузки конфигурации %(fn)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:244
+#: xpdm/gui.py:258
 msgid "No profile selected"
 msgstr "Не выбрана конфигурация"
 
-#: xpdm/gui.py:249
+#: xpdm/gui.py:263
 msgid "No serial port selected"
 msgstr "Порт программатора не выбран"
 
-#: xpdm/gui.py:255
+#: xpdm/gui.py:269
 msgid "Uploading settings to controller"
 msgstr "Загрузка настроек в контроллер"
 
-#: xpdm/gui.py:262
+#: xpdm/gui.py:277
 msgid "Settings uploaded successfully"
 msgstr "Параметры успешно загружены"
 
-#: xpdm/gui.py:264
-msgid "Upload failed"
-msgstr "Неудачная загрузка"
+#: xpdm/gui.py:280
+#, python-format
+msgid "Upload failed: %(msg)s"
+msgstr "Неудачная загрузка: %(msg)s"
 
-#: xpdm/gui.py:282
+#: xpdm/gui.py:298
 msgid "New profile"
 msgstr "Новая конфигурация"
 
-#: xpdm/gui.py:293
+#: xpdm/gui.py:309
 msgid "New "
 msgstr "Новый "
 
-#: xpdm/gui.py:307
+#: xpdm/gui.py:323
 #, python-format
 msgid "Are you sure you want to delete profile \"%s\"?"
 msgstr "Уверены, что хотите удалить конфигурацию \"%s\"?"
 
-#: xpdm/gui.py:314
+#: xpdm/gui.py:330
 msgid "Profile deleted"
 msgstr "Конфигурация удалена"
 
-#: xpdm/gui.py:317
+#: xpdm/gui.py:333
 #, python-format
 msgid "Failed to remove profile file %(fn)s"
 msgstr "Не удалось удалить файл конфигурации %(fn)s"
 
-#: xpdm/gui.py:319
+#: xpdm/gui.py:335
 msgid "Failed to delete profile"
 msgstr "Не удалось удалить конфигурацию"
+
+#: xpd:91
+#, python-format
+msgid ""
+"Ooops! Something bad happened, and I can't handle it! Please report the "
+"following information to author:\n"
+"\n"
+"%(msg)s"
+msgstr ""
+"Опаньки! Случилось непредвиденное, и я не знаю как с этим дальше жить! "
+"Пожалуйста, передайте мою предсмертную записку автору:\n"
+"\n"
+"%(msg)s"

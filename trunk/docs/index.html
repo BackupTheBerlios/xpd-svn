@@ -95,6 +95,100 @@ Parameter Designer. XPD has chosen to save just the numeric values,
 without the double-colon and textual hint after them.</dd>
 </dl>
 
+<h1>Installation</h1>
+
+<h2>Microsoft Windows</h2>
+
+<ol>
+<li><a href="https://developer.berlios.de/project/showfiles.php?group_id=12389">
+Download xpd-windows-prereq.zip</a> and unpack it to some temp directory (the files
+may be deleted after they are used).</li>
+<li>Inside there are three installers for three XPD pre-requisites:
+<ul>
+<li><code>python-2.7.1.msi</code> - This is Python interpreter, install it first.
+<li><code>pygtk-all-in-one-2.22.6.win32-py2.7.msi</code> - This is the GTK+
+llibrary (the graphical user interface library) and the Python bindings for it,
+install this after Python.
+<li><code>pyserial-2.5.win32.exe</code> - Run this to install the PySerial library
+</ul>
+</li>
+<li>Now <a href="https://developer.berlios.de/project/showfiles.php?group_id=12389">
+download XPD itself</a>, xpd-*-windows.zip, and unzip it to <code>C:\Program Files\</code>
+(or any other place at your choice).</li>
+<li>Open the xpd-* folder (created when you extract the archive), you will see
+two icons: the XPD program and the XPD icon. Run the program (not the icon :))
+with a double-click. If all goes well, it should start and you will see a window
+like displayed on the screenshot above.
+</li>
+<li>If you intend to use it often, create a shortcut for it (Ctrl+Shift and drag
+the program to desktop), then you may change program's icon to the one provided
+in xpd' directory.</li>
+</ol>
+
+<p>Also, of course, you must install the drivers for the respective USB-to-UART
+cable you are using (PL2303, FT232, CP2102 etc).
+</p>
+
+<h2>Linux</h2>
+
+<p>If you're using the Ubuntu/Debian or Fedora Linux distributions, just
+<a href="https://developer.berlios.de/project/showfiles.php?group_id=12389">
+download the respective binary package</a> (.deb or .rpm respectively) and install it.
+</p>
+
+<p>Otherwise, <a href="https://developer.berlios.de/project/showfiles.php?group_id=12389">
+download the source code tarball</a> (<code>xpd-*.tar.bz2</code>), unpack it somewhere,
+enter the xpd-* directory and run "make install" as root. If all pre-requisites are
+in place (e.g. Python, PySerial, PyGTK) it will easily install. Now you can run xpd
+either via the "Applications" menu (should be in "Electronics" section), or just
+run the "xpd" command from terminal or otherwise.
+</p>
+
+<p>Now it may happen that the "Serial port" combobox in xpd is empty. This means
+one of two things: either you don't have serial ports at all, or your user account
+does not have access to serial port devices. Check the access rights on the serial
+ports:
+<p>
+
+<pre>
+$ ls -la /dev/tty*S*
+crw-rw---- 1 root dialout   4, 64 Июн  4 23:55 /dev/ttyS0
+crw-rw---- 1 root dialout   4, 65 Май 11 21:00 /dev/ttyS1
+crw-rw---- 1 root dialout   4, 66 Май 11 21:00 /dev/ttyS2
+crw-rw---- 1 root dialout   4, 67 Май 11 21:00 /dev/ttyS3
+crw-rw---- 1 root dialout 188,  0 Июн  5 10:07 /dev/ttyUSB0
+crw-rw---- 1 root dialout 188,  1 Июн  5 10:07 /dev/ttyUSB1
+</pre>
+
+<p>Okay, so the "dialout" group has write access to serial ports. Now you just have
+to add your account to this group ("dialout" in my case), either via administration
+tools, or quicker via the command line:
+<p>
+
+<pre>
+$ usermod -a -G dialout <userid>
+</pre>
+
+<p>Now relogon, and you should gain access to serial ports.
+</p>
+
+<p>Another problem that may happen is that some shitty tools may put various trash
+into the serial ports at random times. For example, openct contains a driver for
+smart card readers attached to serial ports (<code>/lib/udev/openct_serial</code>).
+To simulate "plug-and-pray" this shit often writes to serial port various strings,
+waiting for an answer from the device. If you get unexpected problems (e.g. xpd
+starts talking with the controller then locks, etc), you may try to catch the
+S-O-B with the pants down by using the command:
+</p>
+
+<pre>
+fuser -v /dev/ttyUSB0 # or whatever serial port you are using
+</pre>
+
+<p>This command will list the processes that use a file (or device).
+I recommend deinstalling the openct package, most people don't need it anyway.
+</p>
+
 <h1>Usage</h1>
 
 <p>The basic usage of the program should be quite obvious for anybody who can

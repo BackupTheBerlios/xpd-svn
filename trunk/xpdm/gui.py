@@ -44,7 +44,7 @@ class Application:
         self.builder.set_translation_domain (textdomain);
         try:
             self.builder.add_from_file (self.DATADIR + "/gui.xml")
-        except RuntimeError as e:
+        except RuntimeError, e:
             raise SystemExit (str (e))
 
         self.builder.connect_signals (self);
@@ -272,10 +272,12 @@ class Application:
         self.ButtonCancelUpload.grab_add ()
         self.MainWindow.set_deletable (False)
 
-        if prof.Upload (serport, self.UpdateProgress):
-            self.SetStatus (_("Settings uploaded successfully"))
-        else:
-            self.SetStatus (_("Upload failed"))
+        try:
+            if prof.Upload (serport, self.UpdateProgress):
+                self.SetStatus (_("Settings uploaded successfully"))
+
+        except Exception, e:
+            self.SetStatus (_("Upload failed: %(msg)s") % { "msg" : str (e) })
 
         self.MainWindow.set_deletable (True)
         self.ButtonCancelUpload.grab_remove ()

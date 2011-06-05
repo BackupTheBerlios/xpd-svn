@@ -41,8 +41,12 @@ except:
 
 # check PySerial version number
 from distutils.version import LooseVersion
-if LooseVersion (serial.VERSION) < LooseVersion ("2.5"):
-    print "This program requires PySerial version 2.5 and above"
+# PySerial version 2.3 incorrectly reports version 1.35... eeek!
+if serial.VERSION == "1.35":
+    serial.VERSION = "2.3"
+if LooseVersion (serial.VERSION) < LooseVersion ("2.3"):
+    gtk.MessageDialog (None, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR, gtk.BUTTONS_CLOSE, \
+        "This program requires PySerial version 2.3 and above").run ()
     sys.exit (1)
 
 if __name__ == "__main__":
@@ -74,8 +78,17 @@ if __name__ == "__main__":
         import __builtin__
         __builtin__.__dict__['_'] = unicode
 
-    # Load the GUI now so that translation of global statics will work
-    from xpdm import gui
+    try:
+        # Load the GUI now so that translation of global statics will work
+        from xpdm import gui
 
-    app = gui.Application ("xpd")
-    gtk.main ()
+        app = gui.Application ("xpd")
+        gtk.main ()
+
+    except:
+        import traceback
+        gtk.MessageDialog (None, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR, gtk.BUTTONS_CLOSE, \
+            _("Ooops! Something bad happened, and I can't handle it! "\
+              "Please report the following information to author:\n\n%(msg)s") %
+            { "msg" : "\n".join (traceback.format_exception (*sys.exc_info ())) }).run ()
+        sys.exit (1)

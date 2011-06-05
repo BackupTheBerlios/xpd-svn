@@ -900,40 +900,34 @@ class Profile:
     def Upload (self, com_port, progress_func):
         data = self.BuildRaw ()
 
-        try:
-            ser = serial.Serial (com_port, 9600, serial.EIGHTBITS, serial.PARITY_NONE,
-                serial.STOPBITS_ONE, timeout=0.2)
+        ser = serial.Serial (com_port, 9600, serial.EIGHTBITS, serial.PARITY_NONE,
+            serial.STOPBITS_ONE, timeout=0.2)
 
-            progress_func (msg = _("Waiting for controller ready"))
-            # Sent '8's and wait for the 'U' response
-            while True:
-                ser.write ('8')
-                c = ser.read ()
-                if c == 'U':
-                    break
+        progress_func (msg = _("Waiting for controller ready"))
+        # Sent '8's and wait for the 'U' response
+        while True:
+            ser.write ('8')
+            c = ser.read ()
+            if c == 'U':
+                break
 
-                if len (c) > 0:
-                    progress_func (msg = _("Invalid reply byte '%(chr)02x'") % { "chr" : c })
-                    return False
+            if len (c) > 0:
+                raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
 
-                if not progress_func ():
-                    return False
+            if not progress_func ():
+                return False
 
-            progress_func (msg = _("Waiting acknowledgement"))
-            ser.write (data)
-            while True:
-                c = ser.read ()
-                if c == 'U':
-                    return True
+        progress_func (msg = _("Waiting acknowledgement"))
+        ser.write (str (data))
+        while True:
+            c = ser.read ()
+            if c == 'U':
+                return True
 
-                if len (c) > 0:
-                    progress_func (msg = _("Invalid reply byte '%(chr)02x'") % { "chr" : c })
-                    return False
+            if len (c) > 0:
+                raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
 
-                if not progress_func ():
-                    return False
-
-        except serial.SerialException:
-            pass
+            if not progress_func ():
+                return False
 
         return False
