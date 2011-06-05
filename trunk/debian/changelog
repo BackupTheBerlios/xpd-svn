@@ -2,6 +2,8 @@ xpd (0.2.0-1) unstable; urgency=low
 
   * Added the "Copy" profile button
   * Added Lyen controller modifications: 6, 9, 12, 15, 18, 24 and 36-FET versions.
+  * Better error handling (will report errors rather than hanging)
+  * Older PySerial 2.3 is now supported (Debian & Ubuntu)
 
  -- Andrew Zabolotny <zap@cobra.ru>  Thu, 05 May 2011 00:22:19 +0300
 
