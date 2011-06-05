@@ -903,6 +903,8 @@ class Profile:
         ser = serial.Serial (com_port, 9600, serial.EIGHTBITS, serial.PARITY_NONE,
             serial.STOPBITS_ONE, timeout=0.2)
 
+        ser.flushInput ()
+
         progress_func (msg = _("Waiting for controller ready"))
         # Sent '8's and wait for the 'U' response
         while True:
