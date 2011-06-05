@@ -204,6 +204,15 @@ second, in the user's home data directory (~/.local/share/xpd/ on Linux,
 "C:\Documents and Settings\Username\My Documents\xpd" on Windows).
 </p>
 
+<p>Also on Linux I would suggest to enable icons-on-buttons (which is now disabled
+by default in GNOME, and the interface settings page was removed too,
+<a href="http://mail.gnome.org/archives/gnomecc-list/2009-July/msg00015.html">
+it was argued</a> that icons on buttons are "bad design decisions").
+So you'll have to launch gconf-editor, navigate to
+<code>/desktop/gnome/interface/</code> folder and enable the
+<code>buttons_have_icons</code> setting.
+</p>
+
 <a name="license"></a>
 <h1>License</h1>
 
