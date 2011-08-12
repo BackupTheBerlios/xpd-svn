@@ -234,8 +234,8 @@ msgstr "Режим переключателя скорости"
 msgid ""
 "The way how the speed switch functions. When in 'switch' mode you may use a "
 "three-position switch which connects X1 (speed 1) or X2 (speed 3) to GND, or "
-"both unconnected (speed 2). In 'toggle' mode by connecting (with a momentary "
-"switch) X1 to ground will toggle between speeds 1 and 2 (speed 2 is the "
+"leaves both unconnected (speed 2). In 'toggle' mode connecting X1 to ground "
+"with a momentary switch will toggle between speeds 1 and 2 (speed 2 is the "
 "default in both setups)."
 msgstr ""
 "Режим работы переключателя скоростей. В режиме 'Селектор' Вы можете "
@@ -243,8 +243,7 @@ msgstr ""
 "(скорость 1) и X2 (скорость 3) к GND для выбора одной из трёх скоростей (в "
 "случае, если оба контакта не подключены, выбирается скорость 2). В режиме "
 "'Переключатель' Вы сможете переключаться кнопкой, замыкающей контакт X1 на "
-"землю, между скоростями 1 и 2 (скорость 2 включается по умолчанию в обоих "
-"режимах)."
+"землю, между скоростями 1 и 2 (скорость 2 включается по умолчанию)."
 
 #: xpdm/infineon.py:330
 msgid "Speed 1"
@@ -486,16 +485,16 @@ msgstr ""
 "Лишние данные в конце файла:\n"
 "'%(data)s'"
 
-#: xpdm/infineon.py:906
+#: xpdm/infineon.py:908
 msgid "Waiting for controller ready"
 msgstr "Ожидание готовности контроллера"
 
-#: xpdm/infineon.py:915 xpdm/infineon.py:928
+#: xpdm/infineon.py:918 xpdm/infineon.py:931
 #, python-format
 msgid "Invalid reply byte '%(chr)02x'"
 msgstr "Неверный ответный байт '%(chr)02x'"
 
-#: xpdm/infineon.py:920
+#: xpdm/infineon.py:923
 msgid "Waiting acknowledgement"
 msgstr "Ожидание подтверждения"
 

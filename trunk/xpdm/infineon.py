@@ -314,8 +314,8 @@ after a bit of rest.\
         "Description" : _("""\
 The way how the speed switch functions. When in 'switch' mode you may \
 use a three-position switch which connects X1 (speed 1) or X2 (speed 3) \
-to GND, or both unconnected (speed 2). In 'toggle' mode by connecting \
-(with a momentary switch) X1 to ground will toggle between speeds 1 \
+to GND, or leaves both unconnected (speed 2). In 'toggle' mode connecting \
+X1 to ground with a momentary switch will toggle between speeds 1 \
 and 2 (speed 2 is the default in both setups).\
 """),
         "Default"     : SSM_SELECT,
@@ -906,7 +906,7 @@ class Profile:
         ser.flushInput ()
 
         progress_func (msg = _("Waiting for controller ready"))
-        # Sent '8's and wait for the 'U' response
+        # Send '8's and wait for the 'U' response
         while True:
             ser.write ('8')
             c = ser.read ()
@@ -914,7 +914,8 @@ class Profile:
                 break
 
             if len (c) > 0:
-                raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
+                if c != chr (0):
+                    raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
 
             if not progress_func ():
                 return False
