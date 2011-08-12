@@ -52,6 +52,9 @@ update-desktop-database -q
 update-desktop-database -q
 
 %changelog
+* Fri Aug 12 2011 Andrey Zabolotnyi <zap@cobra.ru> - 0.2.1-1
+- Updated source to version 0.2.1
+
 * Sat Jun 4 2011 Andrey Zabolotnyi <zap@cobra.ru> - 0.2.0-1
 - Get rid of the glade dependency, now using gtk.Builder
 
