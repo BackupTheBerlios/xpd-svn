@@ -168,7 +168,8 @@ EBS_DISABLED = 0
 EBS_MODERATE = 1
 EBS_STRONG = 2
 
-EBSLevelDesc = [ _("Disabled"), _("Moderate"), _("Strong") ]
+EBSLevelDesc = [ _("Disabled"), _("Moderate"), _("Strong"), _("Unlimited") ]
+EBSLevel2Raw = [ 0, 4, 8, 255 ]
 
 # Guard mode signal polarity (anti-theft)
 GP_LOW = 0
@@ -477,15 +478,17 @@ The connected LEDs may use either a common GND or common VCC.\
         "Name"        : _("EBS level"),
         "Description" : _("""\
 Electronic braking level. Choose 'Moderate' for smaller wheel diameters, \
-and 'Strong' for 26" and up. The larger is the level, the more effective \
-is braking.\
+and 'Strong' for 26" and up. In 'Unlimited' mode controller does not impose \
+any limits on braking strength; this is a undocumented feature and is \
+not guaranteed to work with your controller. The larger is the level, \
+the more effective is braking.\
 """),
         "Default"     : EBS_DISABLED,
         "Widget"      : PWT_COMBOBOX,
-        "Range"       : (0, 2),
+        "Range"       : (0, 3),
         "GetDisplay"  : lambda prof, v: EBSLevelDesc [v],
         # This member, if defined, tells how to translate setting to raw value
-        "ToRaw"       : lambda prof, v: v * 4,
+        "ToRaw"       : lambda prof, v: EBSLevel2Raw [v],
     },
 
     "EBSLimVoltage" :

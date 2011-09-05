@@ -1,3 +1,9 @@
+xpd (0.2.2-1) unstable; urgency=low
+
+  * Added the "Unlimited" EBS level (undocumented feature).
+
+ -- Andrew Zabolotny <zap@cobra.ru>  Fri, 5 Sep 2011 00:42:03 +0400
+
 xpd (0.2.1-1) unstable; urgency=low
 
   * The serial buffer is flushed before starting reprogramming the controller.
