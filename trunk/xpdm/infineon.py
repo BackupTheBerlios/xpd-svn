@@ -235,7 +235,8 @@ have a non-standard controller, you may create your own type in infineon.py\
 The current limit in motor phase wires. Since the e-bike controller is, \
 in a sense, a step-down DC-DC converter, the motor current can actually be \
 much higher than the battery current. When setting this parameter, make \
-sure you don't exceed the capabilities of the MOSFETs in your controller.\
+sure you don't exceed the capabilities of the MOSFETs in your controller. \
+This parameter mostly affects the acceleration on low speeds.\
 """),
         "Default"     : 30,
         # A list of parameters this one depends on
