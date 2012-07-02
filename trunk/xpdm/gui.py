@@ -11,7 +11,7 @@ import gtk
 import gobject
 import glib
 import gio
-from xpdm import VERSION, FNENC, comports, infineon
+from xpdm import VERSION, FNENC, comports, infineon, infineon2, infineon3
 
 
 #-----------------------------------------------------------------------------
@@ -20,6 +20,7 @@ from xpdm import VERSION, FNENC, comports, infineon
 class Application:
     def __init__ (self, textdomain):
         self.Dead = False
+        self.ActiveProfile = None
 
         # Figure out our installation paths
         self.DATADIR = os.path.join (os.path.dirname (os.path.abspath (
@@ -52,7 +53,7 @@ class Application:
         # Cache most used widgets into variables
         for widget in "MainWindow", "AboutDialog", "StatusBar", "ComPortsList", \
             "ProfileList", "EditProfileDialog", "ProfileName", "ParamDescLabel", \
-            "ParamVBox" :
+            "ParamVBox", "ControllerFamily" :
             setattr (self, widget, self.builder.get_object (widget))
 
         # Due to a bug in libglade we can't embed controls into the status bar
@@ -74,6 +75,7 @@ class Application:
         self.InitProfileList ()
         self.ScanComPorts ()
         self.LoadProfiles ()
+        self.FillFamilies ()
 
         self.MainWindow.show ()
 
@@ -155,7 +157,10 @@ class Application:
 
     def EditProfile (self, prof, isnew):
         self.ProfileName.set_text (prof.Description)
+        self.SelectFamily (prof.Family)
         prof.FillParameters (self.ParamVBox)
+
+        self.ActiveProfile = prof
 
         self.EditProfileDialog.show ()
         if self.EditProfileDialog.run () == gtk.RESPONSE_APPLY:
@@ -192,12 +197,14 @@ class Application:
 
             self.RefreshProfiles ()
 
+        self.ActiveProfile = None
         self.EditProfileDialog.hide ()
 
         self.ParamVBox.foreach (self.ClearChildren, self.ParamVBox)
 
 
     def LoadProfiles (self, sel=None):
+        # Remember the old selection, before re-filling the list
         model = self.ProfileList.get_model ()
         if not sel:
             sel = self.ProfileList.get_selection ().get_selected () [1]
@@ -208,14 +215,15 @@ class Application:
         for x in glob.glob (os.path.join (self.DATADIR, "*.asv")) + \
                  glob.glob (os.path.join (self.CONFIGDIR, "*.asv")):
             try:
-                prof = self.LoadProfile (x, infineon.Profile)
-                self.ProfileListStore.append ((_("Infineon"), \
-                    prof.GetModel (), prof.Description, prof))
+                prof = self.LoadProfile (x)
+                self.ProfileListStore.append ( \
+                    (prof.Family, prof.GetModel (), prof.Description, prof))
             except ValueError, e:
                 self.Message (gtk.MESSAGE_WARNING, \
                     _("Failed to load profile %(fn)s:\n%(msg)s") % \
                     { "fn" : x, "msg" : e })
 
+        # Re-select previously selected profile
         if sel:
             i = model.get_iter_first ()
             while i:
@@ -224,6 +232,26 @@ class Application:
                     break
                 i = model.iter_next (i)
 
+    def FillFamilies (self):
+        store = gtk.ListStore (str)
+        cell = gtk.CellRendererText ()
+        self.ControllerFamily.pack_start (cell, True)
+        self.ControllerFamily.add_attribute (cell, 'text', 0)
+
+        for x in infineon.Families:
+            store.append ([x [0]])
+
+        self.ControllerFamily.set_model (store)
+        self.ControllerFamily.set_active (0)
+
+
+    def SelectFamily (self, Family):
+        store = self.ControllerFamily.get_model ()
+        for i in range (len (store)):
+            if store [i][0] == Family:
+                self.ControllerFamily.set_active (i)
+                break
+
 
     def RefreshProfiles (self):
         for x in self.ProfileListStore:
@@ -231,10 +259,17 @@ class Application:
             x [2] = x [3].Description
 
 
-    def LoadProfile (self, fn, profclass):
+    def LoadProfile (self, fn):
         f = file (fn, "r")
-        prof = profclass (fn)
-        prof.Load (f.readlines ())
+        l = f.readlines ()
+        prof = None
+        for fam in infineon.Families:
+            if fam [2] (l):
+                prof = fam [1] (fam [0], fn)
+                break
+
+        if not prof is None:
+            prof.Load (f.readlines ())
 
         return prof
 
@@ -295,7 +330,8 @@ class Application:
 
 
     def on_ButtonCreate_clicked (self, but):
-        prof = infineon.Profile (_("New profile"))
+        prof = infineon.Families [0][1] ( \
+            infineon.Families [0][0], _("New profile"))
         self.EditProfile (prof, True)
         self.LoadProfiles (prof.Description)
 
@@ -339,3 +375,19 @@ class Application:
         self.AboutDialog.set_version (VERSION)
         self.AboutDialog.run ()
         self.AboutDialog.hide ()
+
+
+    def on_ControllerFamily_changed (self, cb):
+        if self.ActiveProfile is None:
+            return
+
+        fam = infineon.Families [cb.get_active ()]
+        if fam [0] == self.ActiveProfile.Family:
+            return
+
+        prof = fam [1] (fam [0], self.ActiveProfile.FileName)
+        prof.Copy (self.ActiveProfile)
+        self.ActiveProfile = prof
+
+        self.ParamVBox.foreach (self.ClearChildren, self.ParamVBox)
+        prof.FillParameters (self.ParamVBox)
