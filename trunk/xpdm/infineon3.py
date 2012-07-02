@@ -500,6 +500,7 @@ to pedalling.\
         "Default"     : 0,
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Range"       : (0, 253),
+        "Precision"   : 0,
         "GetDisplay"  : lambda prof, v: v + 2,
         "SetDisplay"  : lambda prof, v: v - 2,
     },
