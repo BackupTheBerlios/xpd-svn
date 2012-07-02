@@ -102,7 +102,7 @@ class Application:
 
 
     def InitProfileList (self):
-        self.ProfileListStore = gtk.ListStore (str, str, str, object)
+        self.ProfileListStore = gtk.ListStore (str, str, str, str)
 
         self.ProfileList.set_model (self.ProfileListStore)
 
@@ -155,7 +155,14 @@ class Application:
         return not (self.UploadCancelled or self.Dead)
 
 
-    def EditProfile (self, prof, isnew):
+    def EditProfile (self, prof, oldsel=None):
+        if prof is None:
+            return
+
+        if oldsel is None:
+            selected_prof = prof.Description [:]
+        else:
+            selected_prof = oldsel
         self.ProfileName.set_text (prof.Description)
         self.SelectFamily (prof.Family)
         prof.FillParameters (self.ParamVBox)
@@ -163,31 +170,20 @@ class Application:
         self.ActiveProfile = prof
 
         self.EditProfileDialog.show ()
-        if self.EditProfileDialog.run () == gtk.RESPONSE_APPLY:
-            if isnew:
-                prof.SetFileName (os.path.join (self.CONFIGDIR, \
-                    self.ProfileName.get_text ().strip () + ".asv"))
+        ok = self.EditProfileDialog.run () == gtk.RESPONSE_APPLY
+        self.EditProfileDialog.hide ()
 
-            prof.SaveParameters ()
-            lines = prof.Save ()
+        self.ParamVBox.foreach (self.ClearChildren, self.ParamVBox)
+        prof = self.ActiveProfile
+        self.ActiveProfile = None
 
-            # Save profile, if we have enough access rights
-            try:
-                f = open (prof.FileName, "wb")
-                f.write ('\n'.join (lines) + '\n')
-                f.close ()
-                self.SetStatus (_("Profile saved"))
-            except IOError, e:
-                self.Message (gtk.MESSAGE_ERROR, \
-                    _("Failed to save profile %(desc)s:\n%(msg)s") % \
-                    { "desc" : prof.Description, "msg" : e })
-                self.SetStatus (_("Failed to save profile"))
-
+        if ok:
             # Rename profile, if profile name changed
             try:
                 newname = self.ProfileName.get_text ().strip ()
                 if newname != prof.Description:
-                    prof.Rename (newname, True)
+                    prof.SetDescription (newname)
+                    selected_prof = newname [:]
                     self.SetStatus (_("Profile renamed"))
             except OSError, e:
                 self.Message (gtk.MESSAGE_ERROR, \
@@ -195,12 +191,18 @@ class Application:
                     { "desc" : prof.Description, "msg" : e })
                 self.SetStatus (_("Failed to rename profile"))
 
-            self.RefreshProfiles ()
+            # Save profile, if we have enough access rights
+            try:
+                prof.Save ()
+                selected_prof = prof.Description [:]
+                self.SetStatus (_("Profile saved"))
+            except IOError, e:
+                self.Message (gtk.MESSAGE_ERROR, \
+                    _("Failed to save profile %(desc)s:\n%(msg)s") % \
+                    { "desc" : prof.Description, "msg" : e })
+                self.SetStatus (_("Failed to save profile"))
 
-        self.ActiveProfile = None
-        self.EditProfileDialog.hide ()
-
-        self.ParamVBox.foreach (self.ClearChildren, self.ParamVBox)
+        self.LoadProfiles (selected_prof)
 
 
     def LoadProfiles (self, sel=None):
@@ -217,7 +219,7 @@ class Application:
             try:
                 prof = self.LoadProfile (x)
                 self.ProfileListStore.append ( \
-                    (prof.Family, prof.GetModel (), prof.Description, prof))
+                    (prof.Family, prof.GetModel (), prof.Description, prof.FileName))
             except ValueError, e:
                 self.Message (gtk.MESSAGE_WARNING, \
                     _("Failed to load profile %(fn)s:\n%(msg)s") % \
@@ -253,12 +255,6 @@ class Application:
                 break
 
 
-    def RefreshProfiles (self):
-        for x in self.ProfileListStore:
-            x [1] = x [3].GetModel ()
-            x [2] = x [3].Description
-
-
     def LoadProfile (self, fn):
         f = file (fn, "r")
         l = f.readlines ()
@@ -269,10 +265,27 @@ class Application:
                 break
 
         if prof != None:
-            prof.Load (l)
+            prof.Load (fn, l)
 
         return prof
 
+
+    def GetSelectedProfile (self):
+        sel = self.ProfileList.get_selection ().get_selected () [1]
+        if not sel:
+            self.SetStatus (_("No profile selected"))
+            return None
+
+        return self.ProfileListStore [sel] [2]
+
+
+    def LoadSelectedProfile (self):
+        sel = self.ProfileList.get_selection ().get_selected () [1]
+        if not sel:
+            self.SetStatus (_("No profile selected"))
+            return None
+
+        return self.LoadProfile (self.ProfileListStore [sel] [3])
 
 # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- #
 
@@ -288,17 +301,14 @@ class Application:
 
 
     def on_ButtonApply_clicked (self, but):
-        sel = self.ProfileList.get_selection ().get_selected () [1]
-        if not sel:
-            self.SetStatus (_("No profile selected"))
+        prof = self.LoadSelectedProfile ()
+        if prof is None:
             return
 
         serport = self.ComPortsList.get_active_text ()
         if not serport:
             self.SetStatus (_("No serial port selected"))
             return
-
-        prof = self.ProfileListStore [sel] [3]
 
         self.UploadCancelled = False
         self.SetStatus (_("Uploading settings to controller"))
@@ -321,38 +331,29 @@ class Application:
 
 
     def on_ButtonEdit_clicked (self, but):
-        sel = self.ProfileList.get_selection ().get_selected () [1]
-        if not sel:
-            return
-
-        prof = self.ProfileListStore [sel] [3]
-        self.EditProfile (prof, False)
+        self.EditProfile (self.LoadSelectedProfile ())
 
 
     def on_ButtonCreate_clicked (self, but):
         prof = infineon.Families [0][1] ( \
-            infineon.Families [0][0], _("New profile"))
-        self.EditProfile (prof, True)
-        self.LoadProfiles (prof.Description)
+            infineon.Families [0][0], os.path.join (self.CONFIGDIR, _("New profile")))
+        prof.SetDescription (prof.Description)
+        self.EditProfile (prof, self.GetSelectedProfile ())
 
 
     def on_ButtonCopy_clicked (self, but):
-        sel = self.ProfileList.get_selection ().get_selected () [1]
-        if not sel:
+        prof = self.LoadSelectedProfile ()
+        if prof is None:
             return
 
-        prof = copy.copy (self.ProfileListStore [sel] [3])
-        prof.Description = _("New ") + prof.Description
-        self.EditProfile (prof, True)
-        self.LoadProfiles (prof.Description)
+        newdesc = _("New ") + prof.Description
+        prof.FileName = os.path.join (self.CONFIGDIR, newdesc)
+        prof.SetDescription (newdesc)
+        self.EditProfile (prof, self.GetSelectedProfile ())
 
 
     def on_ButtonDelete_clicked (self, but):
-        sel = self.ProfileList.get_selection ().get_selected () [1]
-        if not sel:
-            return
-
-        prof = self.ProfileListStore [sel] [3]
+        prof = self.LoadSelectedProfile ()
 
         d = gtk.MessageDialog (None, \
             gtk.DIALOG_MODAL, gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL, \
@@ -362,7 +363,7 @@ class Application:
         if rc == gtk.RESPONSE_OK:
             try:
                 prof.Remove ()
-                self.ProfileListStore.remove (sel)
+                self.LoadProfiles ()
                 self.SetStatus (_("Profile deleted"))
             except:
                 self.Message (gtk.MESSAGE_ERROR, \
@@ -386,7 +387,7 @@ class Application:
             return
 
         prof = fam [1] (fam [0], self.ActiveProfile.FileName)
-        prof.Copy (self.ActiveProfile)
+        prof.CopyParameters (self.ActiveProfile)
         self.ActiveProfile = prof
 
         self.ParamVBox.foreach (self.ClearChildren, self.ParamVBox)

@@ -140,6 +140,7 @@ ControllerTypeDesc = \
         "Voltage2Raw"      : lambda U: U * 3.281,
         "Raw2Voltage"      : lambda R: R / 3.281,
         # Temporary hack until someone finds out what's this
+        # Looks like this is some rudiment of "Speed4" from EB3xx
         "Byte23"           : 80,
     },
     {
@@ -332,8 +333,8 @@ The first speed limit.(see comment to 'speed switch mode').\
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Precision"   : 0,
         "Range"       : (1, 95),
-        "GetDisplay"  : lambda prof, v: v * 1.27,
-        "SetDisplay"  : lambda prof, v: round (v / 1.27),
+        "GetDisplay"  : lambda prof, v: v * 1.26,
+        "SetDisplay"  : lambda prof, v: round (v / 1.26),
     },
 
     "Speed2" :
@@ -348,8 +349,8 @@ The second speed limit.(see comment to 'speed switch mode').\
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Precision"   : 0,
         "Range"       : (1, 95),
-        "GetDisplay"  : lambda prof, v: v * 1.27,
-        "SetDisplay"  : lambda prof, v: round (v / 1.27),
+        "GetDisplay"  : lambda prof, v: v * 1.26,
+        "SetDisplay"  : lambda prof, v: round (v / 1.26),
     },
 
     "Speed3" :
@@ -364,8 +365,8 @@ The third speed limit.(see comment to 'speed switch mode').\
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Precision"   : 0,
         "Range"       : (1, 95),
-        "GetDisplay"  : lambda prof, v: v * 1.27,
-        "SetDisplay"  : lambda prof, v: round (v / 1.27),
+        "GetDisplay"  : lambda prof, v: v * 1.26,
+        "SetDisplay"  : lambda prof, v: round (v / 1.26),
     },
 
     "LimitedSpeed" :
@@ -381,9 +382,9 @@ to ground).\
         "Units"       : "%",
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Precision"   : 0,
-        "Range"       : (1, 127),
-        "GetDisplay"  : lambda prof, v: v / 1.27,
-        "SetDisplay"  : lambda prof, v: round (v * 1.27),
+        "Range"       : (1, 128),
+        "GetDisplay"  : lambda prof, v: v / 1.28,
+        "SetDisplay"  : lambda prof, v: round (v * 1.28),
     },
 
     "ReverseSpeed" :
@@ -398,9 +399,9 @@ board contact is connected to ground.\
         "Units"       : "%",
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Precision"   : 0,
-        "Range"       : (1, 127),
-        "GetDisplay"  : lambda prof, v: v / 1.27,
-        "SetDisplay"  : lambda prof, v: round (v * 1.27),
+        "Range"       : (1, 128),
+        "GetDisplay"  : lambda prof, v: v / 1.28,
+        "SetDisplay"  : lambda prof, v: round (v * 1.28),
     },
 
     "BlockTime" :
@@ -707,7 +708,7 @@ class Profile (infineon.Profile):
                 raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
 
             if not progress_func ():
-                return False
+                break
 
         return False
 

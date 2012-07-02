@@ -63,6 +63,8 @@ PASModeDesc = [ _("Fast"), _("Slow") ]
 # Cruise limit
 CruiseLimitDesc = [ _("No"), _("Yes") ]
 
+# Default speed
+DefaultSpeedDesc = [ _("Speed 1"), _("Speed 2"), _("Speed 3"), _("Speed 4") ]
 
 # Controller type descriptions
 ControllerTypeDesc = \
@@ -242,8 +244,8 @@ The first speed limit (see comment to 'speed switch mode').\
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Precision"   : 0,
         "Range"       : (1, 95),
-        "GetDisplay"  : lambda prof, v: v * 1.27,
-        "SetDisplay"  : lambda prof, v: round (v / 1.27),
+        "GetDisplay"  : lambda prof, v: v * 1.26,
+        "SetDisplay"  : lambda prof, v: round (v / 1.26),
     },
 
     "Speed2" :
@@ -258,8 +260,8 @@ The second speed limit (see comment to 'speed switch mode').\
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Precision"   : 0,
         "Range"       : (1, 95),
-        "GetDisplay"  : lambda prof, v: v * 1.27,
-        "SetDisplay"  : lambda prof, v: round (v / 1.27),
+        "GetDisplay"  : lambda prof, v: v * 1.26,
+        "SetDisplay"  : lambda prof, v: round (v / 1.26),
     },
 
     "Speed3" :
@@ -274,8 +276,8 @@ The third speed limit (see comment to 'speed switch mode').\
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Precision"   : 0,
         "Range"       : (1, 95),
-        "GetDisplay"  : lambda prof, v: v * 1.27,
-        "SetDisplay"  : lambda prof, v: round (v / 1.27),
+        "GetDisplay"  : lambda prof, v: v * 1.26,
+        "SetDisplay"  : lambda prof, v: round (v / 1.26),
     },
 
     "Speed4" :
@@ -290,8 +292,8 @@ The fourth speed limit (see comment to 'speed switch mode').\
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Precision"   : 0,
         "Range"       : (1, 95),
-        "GetDisplay"  : lambda prof, v: v * 1.27,
-        "SetDisplay"  : lambda prof, v: round (v / 1.27),
+        "GetDisplay"  : lambda prof, v: v * 1.26,
+        "SetDisplay"  : lambda prof, v: round (v / 1.26),
     },
 
     "LimitedSpeed" :
@@ -308,8 +310,8 @@ to ground).\
         "Widget"      : infineon.PWT_SPINBUTTON,
         "Precision"   : 0,
         "Range"       : (1, 127),
-        "GetDisplay"  : lambda prof, v: v / 1.27,
-        "SetDisplay"  : lambda prof, v: round (v * 1.27),
+        "GetDisplay"  : lambda prof, v: v / 1.28,
+        "SetDisplay"  : lambda prof, v: round (v * 1.28),
     },
 
     "ReverseSpeed" :
@@ -323,10 +325,10 @@ board contact is connected to ground.\
         "Default"     : 35,
         "Units"       : "%",
         "Widget"      : infineon.PWT_SPINBUTTON,
-        "Precision"   : 0,
-        "Range"       : (1, 127),
-        "GetDisplay"  : lambda prof, v: v * 1.91,
-        "SetDisplay"  : lambda prof, v: round (v / 1.91),
+        "Precision"   : 1,
+        "Range"       : (1, 191),
+        "GetDisplay"  : lambda prof, v: v / 1.91,
+        "SetDisplay"  : lambda prof, v: round (v * 1.91),
     },
 
     "BlockTime" :
@@ -504,6 +506,7 @@ to pedalling.\
         "Precision"   : 0,
         "GetDisplay"  : lambda prof, v: v + 2,
         "SetDisplay"  : lambda prof, v: v - 2,
+        "ToRaw"       : lambda prof, v: v - 2,
     },
 
     "PASMaxSpeed" :
@@ -516,10 +519,10 @@ This sets the speed limit when using the pedal assistant.\
         "Default"     : 100,
         "Units"       : "%",
         "Widget"      : infineon.PWT_SPINBUTTON,
-        "Precision"   : 0,
-        "Range"       : (0, 191),
-        "GetDisplay"  : lambda prof, v: v * 1.91,
-        "SetDisplay"  : lambda prof, v: round (v / 1.91),
+        "Precision"   : 1,
+        "Range"       : (1, 191),
+        "GetDisplay"  : lambda prof, v: v / 1.91,
+        "SetDisplay"  : lambda prof, v: round (v * 1.91),
     },
 
     "DefaultSpeed" :
@@ -531,10 +534,9 @@ This determines which of the four programmed speed limits will be default \
 after power on.\
 """),
         "Default"     : 1,
-        "Widget"      : infineon.PWT_SPINBUTTON,
+        "Widget"      : infineon.PWT_COMBOBOX,
         "Range"       : (0, 3),
-        "GetDisplay"  : lambda prof, v: v + 1,
-        "SetDisplay"  : lambda prof, v: v - 1,
+        "GetDisplay"  : lambda prof, v: DefaultSpeedDesc [v],
     },
 
     "SensorAngle" :
@@ -638,7 +640,7 @@ class Profile (infineon.Profile):
         "SensorAngle",
         "PASMaxSpeed",
         "LimitCruise",
-        0,
+        3,
         0,
         0,
         0,
@@ -675,16 +677,20 @@ class Profile (infineon.Profile):
 
         progress_func (msg = _("Waiting acknowledgement"))
         ser.write (str (data))
+        ack = "QR"
         while True:
             c = ser.read ()
-            if c == 'U':
-                return True
+            if c == ack [0]:
+                c = ""
+                ack = ack [1:]
+                if len (ack) == 0:
+                    return True
 
             if len (c) > 0:
                 raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
 
             if not progress_func ():
-                return False
+                break
 
         return False
 

@@ -44,11 +44,19 @@ class Profile:
 
 
     def SetFileName (self, fn):
+        # If file with old name exists, rename it
+        if (self.FileName != None) and os.access (self.FileName, os.R_OK):
+            os.rename (self.FileName, fn)
+
         self.FileName = fn
         self.Description = os.path.splitext (os.path.basename (fn)) [0]
 
 
-    def Load (self, lines):
+    def SetDescription (self, desc):
+        self.SetFileName (os.path.join (os.path.dirname (self.FileName), desc + ".asv"))
+
+
+    def Load (self, fn, lines):
         vi = 0
         for l in lines:
             # Remove extra shit from the string
@@ -79,7 +87,14 @@ class Profile:
         for parm in self.ParamLoadOrder:
             desc = self.ControllerParameters [parm]
             if desc ["Type"].find ('i') >= 0:
-                lines.append ("%d" % getattr (self, parm))
+                # Hack for controller type
+                if parm == "ControllerType":
+                    model = self.GetModel ()
+                    if model.find ('/') >= 0:
+                        model = model [:model.find ('/')]
+                    lines.append ("%d:%s" % (getattr (self, parm), model))
+                else:
+                    lines.append ("%d" % getattr (self, parm))
             elif desc ["Type"].find ('f') >= 0:
                 mask = "%%.%df" % desc.get ("Precision", 1)
                 lines.append (mask % getattr (self, parm))
@@ -87,14 +102,16 @@ class Profile:
             # Append a CR since the file uses windows line endings
             lines [-1] += '\r'
 
-        return lines
+        f = open (self.FileName, "wb")
+        f.write ('\n'.join (lines) + '\n')
+        f.close ()
 
 
     def GetController (self):
-        try:
-            return self.ControllerTypeDesc [self.EditParameters ["ControllerType"] - 1]
-        except IndexError:
-            return self.ControllerTypeDesc [0]
+        if (self.ControllerType > 0) and (self.ControllerType <= len (self.ControllerTypeDesc)):
+            return self.ControllerTypeDesc [self.ControllerType - 1]
+
+        return self.ControllerTypeDesc [0]
 
 
     def GetModel (self):
@@ -109,23 +126,10 @@ class Profile:
             os.remove (self.FileName)
 
 
-    def Rename (self, newname, isname):
-        # If this is just the new profile name, reconstruct dir & extension
-        if isname:
-            newname = os.path.join (os.path.dirname (self.FileName), \
-                newname + os.path.splitext (self.FileName) [1])
-        os.rename (self.FileName, newname)
-        self.SetFileName (newname)
-
-
     def FillParameters (self, vbox):
         rowcidx = 0
         rowcolors = [ gtk.gdk.Color (1.0, 1.0, 1.0), gtk.gdk.Color (1.0, 0.94, 0.86) ]
 
-        have_parameters = hasattr (self, "EditParameters")
-
-        if not have_parameters:
-            self.EditParameters = {}
         self.EditWidgets = {}
 
         for parm in self.ParamEditOrder:
@@ -140,10 +144,6 @@ class Profile:
                 continue
 
             desc = self.ControllerParameters [parm]
-
-            if (not have_parameters) or (self.EditParameters.get (parm) is None):
-                # Make a copy of parameters for editing
-                self.EditParameters [parm] = getattr (self, parm)
 
             # Place the hbox in a event box to be able to change background color
             evbox = gtk.EventBox ()
@@ -165,7 +165,7 @@ class Profile:
                 cb = gtk.combo_box_new_text ()
                 for i in range (minv, maxv + 1):
                     cb.append_text (desc ["GetDisplay"] (self, i))
-                cb.set_active (self.EditParameters [parm] - minv)
+                cb.set_active (getattr (self, parm) - minv)
                 hbox.pack_start (cb, False, True, 0)
                 cb.connect ("changed", self.ComboBoxChangeValue, parm, desc)
                 self.EditWidgets [parm] = cb
@@ -174,7 +174,7 @@ class Profile:
                 minv, maxv = desc ["Range"]
                 spin = gtk.SpinButton (climb_rate = 1.0)
                 try:
-                    val = desc ["SetDisplay"] (self, self.EditParameters [parm])
+                    val = desc ["SetDisplay"] (self, getattr (self, parm))
                 except IndexError:
                     val = desc ["Default"]
                 spin.get_adjustment ().configure (val, minv, maxv, 1, 5, 0)
@@ -188,15 +188,9 @@ class Profile:
         vbox.show_all ()
 
 
-    def SaveParameters (self):
-        for parm, val in self.EditParameters.items ():
-            setattr (self, parm, val)
-        del self.EditParameters
-
-
     def ComboBoxChangeValue (self, cb, parm, desc):
         minv, maxv = desc ["Range"]
-        self.EditParameters [parm] = minv + cb.get_active ()
+        setattr (self, parm, minv + cb.get_active ())
         # Check if any depending controls needs updating
         for iparm, idesc in self.ControllerParameters.items ():
             if idesc.has_key ("Depends"):
@@ -206,7 +200,10 @@ class Profile:
 
     def SpinButtonOutput (self, spin, parm, desc):
         desc = self.ControllerParameters [parm]
-        mask = "%%.%df %s" % (desc.get ("Precision", 1), desc.get ("Units", "").replace ('%', '%%'))
+        if desc.get ("Units") is None:
+            mask = "%%.%df" % desc.get ("Precision", 1)
+        else:
+            mask = "%%.%df %s" % (desc.get ("Precision", 1), desc.get ("Units", "").replace ('%', '%%'))
         spin.set_text (mask % desc ["GetDisplay"] (self, spin.props.adjustment.value))
         return True
 
@@ -236,13 +233,10 @@ class Profile:
         val = desc ["GetDisplay"] (self, spin.props.adjustment.value)
         prec = desc.get ("Precision", 1)
         val = round (val * math.pow (10, prec)) / math.pow (10, prec)
-        self.EditParameters [parm] = val
+        setattr (self, parm, val)
 
 
     def BuildRaw (self):
-        # Make sure GetController() works correctly
-        self.EditParameters = { "ControllerType" : self.ControllerType }
-
         data = bytearray ()
 
         for x in self.ParamRawOrder:
@@ -265,11 +259,17 @@ class Profile:
             crc = crc ^ x
         data.append (crc)
 
+        import sys
+        for x in range (len (data)):
+            if ((x & 15) == 0):
+                sys.stdout.write ("\n%04x  " % x)
+            sys.stdout.write (" %02x " % data [x])
+        sys.stdout.write ("\n")
+
         return data
 
 
-    def Copy (self, other):
-        self.EditParameters = other.EditParameters
+    def CopyParameters (self, other):
         for parm in self.ControllerParameters.keys ():
             if hasattr (other, parm):
                 setattr (self, parm, getattr (other, parm))
