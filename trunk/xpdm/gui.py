@@ -268,8 +268,8 @@ class Application:
                 prof = fam [1] (fam [0], fn)
                 break
 
-        if not prof is None:
-            prof.Load (f.readlines ())
+        if prof != None:
+            prof.Load (l)
 
         return prof
 

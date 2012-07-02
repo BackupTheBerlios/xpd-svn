@@ -2,6 +2,7 @@
 # Infineon-style e-bike controller profile
 #
 
+import serial
 from xpdm import infineon
 
 # -- # Constants # -- #
@@ -672,15 +673,11 @@ class Profile (infineon.Profile):
             ControllerTypeDesc, ControllerParameters)
 
 
-    def OpenSerial (self):
-        return serial.Serial (com_port, 9600, serial.EIGHTBITS, serial.PARITY_NONE,
-            serial.STOPBITS_ONE, timeout=0.2)
-
-
     def Upload (self, com_port, progress_func):
         data = self.BuildRaw ()
 
-        ser = self.OpenSerial ()
+        ser = serial.Serial (com_port, 9600, serial.EIGHTBITS, serial.PARITY_NONE,
+            serial.STOPBITS_ONE, timeout=0.2)
 
         ser.flushInput ()
 

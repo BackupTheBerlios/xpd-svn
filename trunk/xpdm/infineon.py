@@ -6,7 +6,6 @@ import os
 import gtk
 import ctypes
 import math
-import serial
 
 # Parameter widget types for editing
 PWT_COMBOBOX = 0

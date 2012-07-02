@@ -2,6 +2,7 @@
 # Infineon-style e-bike controller profile
 #
 
+import serial
 from xpdm import infineon
 
 # -- # Constants # -- #
@@ -649,9 +650,43 @@ class Profile (infineon.Profile):
             ControllerTypeDesc, ControllerParameters)
 
 
-    def OpenSerial (self):
-        return serial.Serial (com_port, 9600, serial.EIGHTBITS, serial.PARITY_NONE,
-            serial.STOPBITS_ONE, timeout=0.2)
+    def Upload (self, com_port, progress_func):
+        data = self.BuildRaw ()
+
+        ser = serial.Serial (com_port, 38400, serial.EIGHTBITS, serial.PARITY_NONE,
+            serial.STOPBITS_TWO, timeout=0.2)
+
+        ser.flushInput ()
+
+        progress_func (msg = _("Waiting for controller ready"))
+        # Send '8's and wait for the 'U' response
+        while True:
+            ser.write ('8')
+            c = ser.read ()
+            if c == 'U':
+                break
+
+            if len (c) > 0:
+                if c != chr (0):
+                    raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
+
+            if not progress_func ():
+                return False
+
+        progress_func (msg = _("Waiting acknowledgement"))
+        ser.write (str (data))
+        while True:
+            c = ser.read ()
+            if c == 'U':
+                return True
+
+            if len (c) > 0:
+                raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
+
+            if not progress_func ():
+                return False
+
+        return False
 
 
 def DetectFormat3 (l):
