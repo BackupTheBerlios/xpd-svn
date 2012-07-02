@@ -312,8 +312,8 @@ after a bit of rest.\
 The way how the speed switch functions. When in 'Switch' mode you may \
 use a three-position switch which connects X1 (speed 1) or X2 (speed 3) \
 to GND, or leaves both unconnected (speed 2). In 'Cycle' mode connecting \
-X1 to ground with a momentary switch will toggle between speeds 1 \
-and 2 (speed 2 is the default in both setups).\
+X1 to ground with a momentary switch will toggle between speeds 1, 2 and 3 \
+(speed 1 is default after power-on).\
 """),
         "Default"     : SSM_SWITCH,
         "Widget"      : infineon.PWT_COMBOBOX,

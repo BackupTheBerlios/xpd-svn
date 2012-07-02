@@ -40,7 +40,7 @@ dist:
 	cp -a debian/* xpd-$(VERSION)/debian
 	cp -a docs/* xpd-$(VERSION)/docs
 	cp -a Makefile COPYING README TRANSLATORS VERSION \
-	      setup.py debug-read debug-scan-ports xpd xpd-$(VERSION)
+	      setup.py debug-read-* debug-scan-ports xpd xpd-$(VERSION)
 	tar cvjf xpd-$(VERSION).tar.bz2 xpd-$(VERSION)
 	rm -rf xpd-$(VERSION)
 
