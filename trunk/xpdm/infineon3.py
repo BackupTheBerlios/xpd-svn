@@ -666,9 +666,9 @@ class Profile (infineon.Profile):
             print "> 8"
             ser.write ('8')
             c = ser.read ()
-            if c != None:
+            if (c != None) and (len (c) > 0):
                 for i in c:
-                    print "< %02x", ord(i)
+                    print "< %02x (%c)" % (ord(i), i)
             if c == 'U':
                 break
 
@@ -693,9 +693,9 @@ class Profile (infineon.Profile):
         ack = "QR"
         while True:
             c = ser.read ()
-            if c != None:
+            if (c != None) and (len (c) > 0):
                 for i in c:
-                    print "< %02x", ord(i)
+                    print "< %02x (%c)" % (ord(i), i)
             while c [0] == ack [0]:
                 c = c [1:]
                 ack = ack [1:]
