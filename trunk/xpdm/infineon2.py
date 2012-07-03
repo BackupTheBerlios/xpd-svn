@@ -202,8 +202,8 @@ ControllerParameters = \
     # The name of the variable to hold this parameter
     "ControllerType" :
     {
-        # Parameter type
-        "Type"        : "i",
+        # Parameter type (the '/' is a special hack flag for ControllerType)
+        "Type"        : "i/",
         # A short user-friendly parameter description
         "Name"        : _("Controller type"),
         # Long parameter description

@@ -122,7 +122,7 @@ ControllerParameters = \
 {
     "ControllerType" :
     {
-        "Type"        : "i",
+        "Type"        : "i/",
         "Name"        : _("Controller type"),
         "Description" : _("""\
 The type of your controller. This influences the coefficients assumed for \
@@ -500,13 +500,13 @@ Pedal Assisted Sensor mode.\
 The amount of pulses from the PAS sensor to skip before starting assisting \
 to pedalling.\
 """),
-        "Default"     : 0,
+        "Default"     : 3,
         "Widget"      : infineon.PWT_SPINBUTTON,
-        "Range"       : (0, 253),
+        "Range"       : (2, 255),
         "Precision"   : 0,
-        "GetDisplay"  : lambda prof, v: v + 2,
-        "SetDisplay"  : lambda prof, v: v - 2,
         "ToRaw"       : lambda prof, v: v - 2,
+        "SetDisplay"  : lambda prof, v: v,
+        "GetDisplay"  : lambda prof, v: v,
     },
 
     "PASMaxSpeed" :
@@ -670,7 +670,8 @@ class Profile (infineon.Profile):
 
             if len (c) > 0:
                 if c != chr (0):
-                    raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
+                    print _("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) }
+                    #raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
 
             if not progress_func ():
                 return False

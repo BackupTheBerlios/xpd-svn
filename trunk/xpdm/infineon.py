@@ -88,7 +88,7 @@ class Profile:
             desc = self.ControllerParameters [parm]
             if desc ["Type"].find ('i') >= 0:
                 # Hack for controller type
-                if parm == "ControllerType":
+                if desc ["Type"].find ('/') >= 0:
                     model = self.GetModel ()
                     if model.find ('/') >= 0:
                         model = model [:model.find ('/')]
