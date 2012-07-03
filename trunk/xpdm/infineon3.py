@@ -663,33 +663,48 @@ class Profile (infineon.Profile):
         progress_func (msg = _("Waiting for controller ready"))
         # Send '8's and wait for the 'U' response
         while True:
+            print "> 8"
             ser.write ('8')
             c = ser.read ()
+            if c != None:
+                for i in c:
+                    print "< %02x", ord(i)
             if c == 'U':
                 break
 
             if len (c) > 0:
-                if c != chr (0):
-                    print _("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) }
-                    #raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
+                print _("(1) Invalid reply byte '%(chr)02x'") % { "chr" : ord (c [0]) }
+                #raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
 
             if not progress_func ():
                 return False
 
         progress_func (msg = _("Waiting acknowledgement"))
+
+        import sys
+        print "Writing data"
+        for x in range (len (data)):
+            if ((x & 15) == 0):
+                sys.stdout.write ("\n%04x  " % x)
+            sys.stdout.write (" %02x " % data [x])
+        sys.stdout.write ("\n")
+
         ser.write (str (data))
         ack = "QR"
         while True:
             c = ser.read ()
-            if c == ack [0]:
-                c = ""
+            if c != None:
+                for i in c:
+                    print "< %02x", ord(i)
+            while c [0] == ack [0]:
+                c = c [1:]
                 ack = ack [1:]
                 if len (ack) == 0:
                     return True
 
             if len (c) > 0:
-                print _("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) }
-                #raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
+                print _("(2) Invalid reply byte '%(chr)02x'") % { "chr" : ord (c [0]) }
+                #raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c [0]) })
 
             if not progress_func ():
                 break

@@ -259,13 +259,6 @@ class Profile:
             crc = crc ^ x
         data.append (crc)
 
-        import sys
-        for x in range (len (data)):
-            if ((x & 15) == 0):
-                sys.stdout.write ("\n%04x  " % x)
-            sys.stdout.write (" %02x " % data [x])
-        sys.stdout.write ("\n")
-
         return data
 
 
