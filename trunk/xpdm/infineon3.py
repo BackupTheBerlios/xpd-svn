@@ -688,7 +688,8 @@ class Profile (infineon.Profile):
                     return True
 
             if len (c) > 0:
-                raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
+                print _("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) }
+                #raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
 
             if not progress_func ():
                 break
