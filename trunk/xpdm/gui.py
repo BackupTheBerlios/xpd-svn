@@ -140,11 +140,12 @@ class Application:
 
     def RefreshSerialPorts (self):
         while not self.Dead:
-            spl = []
-            sph = 0
-            for order, port, desc, hwid in sorted (comports ()):
-                spl.append (port)
-                sph += hash (port)
+            if not self.ButtonCancelUpload.get_visible ():
+                spl = []
+                sph = 0
+                for order, port, desc, hwid in sorted (comports (False)):
+                    spl.append (port)
+                    sph += hash (port)
 
             if (sph == self.SerialPortsHash) or self.ButtonCancelUpload.get_visible ():
                 for n in range (10):
@@ -162,7 +163,7 @@ class Application:
         if spl is None:
             spl = []
             sph = 0
-            for order, port, desc, hwid in sorted (comports ()):
+            for order, port, desc, hwid in sorted (comports (False)):
                 spl.append (port)
                 sph += hash (port)
 

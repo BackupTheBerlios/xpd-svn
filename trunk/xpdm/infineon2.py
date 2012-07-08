@@ -680,13 +680,12 @@ class Profile (infineon.Profile):
         ser = serial.Serial (com_port, 9600, serial.EIGHTBITS, serial.PARITY_NONE,
             serial.STOPBITS_ONE, timeout=0.2)
 
-        ser.flushInput ()
-
         progress_func (msg = _("Waiting for controller ready"))
         # Send '8's and wait for the 'U' response
         skip_write = False
         while True:
             if not skip_write:
+                ser.flushInput ()
                 ser.write ('8')
             skip_write = False
 
@@ -695,14 +694,13 @@ class Profile (infineon.Profile):
                 break
 
             if len (c) > 0:
-                # Garbage often comes from the controller upon bootup, just ignore it
-                ser.flushInput ()
                 skip_write = True
 
             if not progress_func ():
                 return False
 
         progress_func (msg = _("Waiting acknowledgement"))
+        ser.flushInput ()
         ser.write (str (data))
         while True:
             c = ser.read ()
