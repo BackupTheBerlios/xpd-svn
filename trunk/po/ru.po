@@ -548,20 +548,20 @@ msgstr "Датчик вращения педалей"
 msgid "External devices"
 msgstr "Внешние устройства"
 
-#: xpdm/infineon3.py:663 xpdm/infineon2.py:685
+#: xpdm/infineon3.py:661 xpdm/infineon2.py:683
 msgid "Waiting for controller ready"
 msgstr "Ожидание готовности контроллера"
 
-#: xpdm/infineon3.py:683 xpdm/infineon2.py:705
+#: xpdm/infineon3.py:681 xpdm/infineon2.py:702
 msgid "Waiting acknowledgement"
 msgstr "Ожидание подтверждения"
 
-#: xpdm/infineon3.py:696 xpdm/infineon2.py:713
+#: xpdm/infineon3.py:695 xpdm/infineon2.py:711
 #, python-format
 msgid "Invalid reply byte '%(chr)02x'"
 msgstr "Неверный ответный байт '%(chr)02x'"
 
-#: xpdm/infineon3.py:717
+#: xpdm/infineon3.py:716
 msgid "Infineon 3"
 msgstr "Инфинеон 3"
 
@@ -625,7 +625,7 @@ msgstr ""
 "отображением только режима 'Круиз', или также можете вывести на данный "
 "светодиод диагностический код ошибки в случае какого-либо сбоя контроллера."
 
-#: xpdm/infineon2.py:734
+#: xpdm/infineon2.py:732
 msgid "Infineon 2"
 msgstr "Инфинеон 2"
 
@@ -649,15 +649,15 @@ msgstr "Модель"
 msgid "Description"
 msgstr "Описание"
 
-#: xpdm/gui.py:192
+#: xpdm/gui.py:193
 msgid "Serial ports list updated"
 msgstr "Список последовательных портов обновлён"
 
-#: xpdm/gui.py:237
+#: xpdm/gui.py:238
 msgid "Profile renamed"
 msgstr "Конфигурация переименована"
 
-#: xpdm/gui.py:240
+#: xpdm/gui.py:241
 #, python-format
 msgid ""
 "Failed to rename profile %(desc)s:\n"
@@ -666,15 +666,15 @@ msgstr ""
 "Не удалось переименовать файл %(desc)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:242
+#: xpdm/gui.py:243
 msgid "Failed to rename profile"
 msgstr "Не удалось переименовать конфигурацию"
 
-#: xpdm/gui.py:248
+#: xpdm/gui.py:249
 msgid "Profile saved"
 msgstr "Конфигурация сохранена"
 
-#: xpdm/gui.py:251
+#: xpdm/gui.py:252
 #, python-format
 msgid ""
 "Failed to save profile %(desc)s:\n"
@@ -683,11 +683,11 @@ msgstr ""
 "Не удалось сохранить файл %(desc)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:253
+#: xpdm/gui.py:254
 msgid "Failed to save profile"
 msgstr "Не удалось записать конфигурацию"
 
-#: xpdm/gui.py:275
+#: xpdm/gui.py:276
 #, python-format
 msgid ""
 "Failed to load profile %(fn)s:\n"
@@ -696,54 +696,77 @@ msgstr ""
 "Ошибка загрузки конфигурации %(fn)s:\n"
 "%(msg)s"
 
-#: xpdm/gui.py:326 xpdm/gui.py:335
+#: xpdm/gui.py:327 xpdm/gui.py:336
 msgid "No profile selected"
 msgstr "Не выбрана конфигурация"
 
-#: xpdm/gui.py:361
+#: xpdm/gui.py:362
 msgid "No serial port selected"
 msgstr "Порт программатора не выбран"
 
-#: xpdm/gui.py:365
+#: xpdm/gui.py:366
 msgid "Uploading settings to controller"
 msgstr "Загрузка настроек в контроллер"
 
 #: xpdm/gui.py:373
+#, python-format
+msgid ""
+"Applying profile: %(prof)s\n"
+"Controller model: %(ctrl)s\n"
+"Serial port: %(port)s\n"
+"\n"
+"Please connect the controller to the programming cable which, in turn, must "
+"be connected to one of the computer's USB sockets. Once you're ready, press "
+"the button on the programming cable and hold it steadily for at least 10 "
+"seconds. You may release the button when this text is replaced back with a "
+"list of existing controller profiles."
+msgstr ""
+"Применяется профиль: %(prof)s\n"
+"Модель контроллера: %(ctrl)s\n"
+"Последовательный порт: %(port)s\n"
+"\n"
+"Пожалуйста, подсоедините контроллер к шнуру программирования а тот, свою "
+"очередь, к разъёму USB компьютера. Когда будете готовы, нажмите кнопку на "
+"шнуре программирования и удерживайте его нажатым хотя бы 10 секунд. Если "
+"данный текст исчезнет, а на его месте вернётся список существующих профилей, "
+"можете отпустить кнопку."
+
+#: xpdm/gui.py:388
 msgid "Settings uploaded successfully"
 msgstr "Параметры успешно загружены"
 
-#: xpdm/gui.py:375
+#: xpdm/gui.py:390
 msgid "Upload cancelled"
 msgstr "Загрузка отменена"
 
-#: xpdm/gui.py:378
+#: xpdm/gui.py:393
 #, python-format
 msgid "Upload failed: %(msg)s"
 msgstr "Неудачная загрузка: %(msg)s"
 
-#: xpdm/gui.py:392
+#: xpdm/gui.py:409
 msgid "New profile"
 msgstr "Новая конфигурация"
 
-#: xpdm/gui.py:402
+#: xpdm/gui.py:419
 msgid "New "
 msgstr "Новый "
 
-#: xpdm/gui.py:413
+#: xpdm/gui.py:430
 #, python-format
 msgid "Are you sure you want to delete profile \"%s\"?"
 msgstr "Уверены, что хотите удалить конфигурацию \"%s\"?"
 
-#: xpdm/gui.py:420
+#: xpdm/gui.py:437
 msgid "Profile deleted"
 msgstr "Конфигурация удалена"
 
-#: xpdm/gui.py:423
+#: xpdm/gui.py:440
 #, python-format
 msgid "Failed to remove profile file %(fn)s"
 msgstr "Не удалось удалить файл конфигурации %(fn)s"
 
-#: xpdm/gui.py:425
+#: xpdm/gui.py:442
 msgid "Failed to delete profile"
 msgstr "Не удалось удалить конфигурацию"
 

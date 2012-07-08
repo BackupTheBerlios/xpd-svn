@@ -57,7 +57,7 @@ class Application:
         # Cache most used widgets into variables
         for widget in "MainWindow", "AboutDialog", "StatusBar", "SerialPortsList", \
             "ProfileList", "EditProfileDialog", "ProfileName", "ParamDescLabel", \
-            "ParamVBox", "ControllerFamily" :
+            "ParamVBox", "ControllerFamily", "UserChoice", "UserHints" :
             setattr (self, widget, self.builder.get_object (widget))
 
         # Due to a bug in libglade we can't embed controls into the status bar
@@ -364,10 +364,27 @@ class Application:
 
         self.UploadCancelled = False
         self.SetStatus (_("Uploading settings to controller"))
+        self.UserChoice.hide ()
+        self.UserHints.show ()
         self.ProgressBar.show ()
         self.ButtonCancelUpload.show ()
         self.ButtonCancelUpload.grab_add ()
         self.MainWindow.set_deletable (False)
+
+        while gtk.events_pending ():
+            gtk.main_iteration ()
+
+        self.UserHints.get_buffer ().set_text (_("""\
+Applying profile: %(prof)s
+Controller model: %(ctrl)s
+Serial port: %(port)s
+
+Please connect the controller to the programming cable which, in turn, \
+must be connected to one of the computer's USB sockets. Once you're ready, \
+press the button on the programming cable and hold it steadily for \
+at least 10 seconds. You may release the button when this text is replaced \
+back with a list of existing controller profiles.\
+""") % { "prof" : prof.Description, "ctrl" : prof.GetModel (), "port" : serport })
 
         try:
             ok = prof.Upload (serport, self.UpdateProgress)
@@ -383,6 +400,8 @@ class Application:
         self.ButtonCancelUpload.grab_remove ()
         self.ButtonCancelUpload.hide ()
         self.ProgressBar.hide ()
+        self.UserHints.hide ()
+        self.UserChoice.show ()
 
 
     def on_ButtonEdit_clicked (self, but):
