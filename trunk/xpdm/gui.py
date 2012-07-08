@@ -11,6 +11,8 @@ import gtk
 import gobject
 import glib
 import gio
+import threading
+import time
 from xpdm import VERSION, FNENC, comports, infineon, infineon2, infineon3
 
 
@@ -19,6 +21,8 @@ from xpdm import VERSION, FNENC, comports, infineon, infineon2, infineon3
 #-----------------------------------------------------------------------------
 class Application:
     def __init__ (self, textdomain):
+        gtk.gdk.threads_init ()
+
         self.Dead = False
         self.ActiveProfile = None
 
@@ -51,7 +55,7 @@ class Application:
         self.builder.connect_signals (self);
 
         # Cache most used widgets into variables
-        for widget in "MainWindow", "AboutDialog", "StatusBar", "ComPortsList", \
+        for widget in "MainWindow", "AboutDialog", "StatusBar", "SerialPortsList", \
             "ProfileList", "EditProfileDialog", "ProfileName", "ParamDescLabel", \
             "ParamVBox", "ControllerFamily" :
             setattr (self, widget, self.builder.get_object (widget))
@@ -73,9 +77,14 @@ class Application:
         self.builder.connect_signals (self);
 
         self.InitProfileList ()
-        self.ScanComPorts ()
         self.LoadProfiles ()
         self.FillFamilies ()
+
+        # Dynamic serial port list update worker
+        self.SerialPortsHash = None
+        self.UpdateSerialPorts ()
+        self.SerialPortsThread = threading.Thread (target=self.RefreshSerialPorts)
+        self.SerialPortsThread.start ()
 
         self.MainWindow.show ()
 
@@ -129,17 +138,58 @@ class Application:
         self.ProfileListStore.set_sort_column_id (1, gtk.SORT_ASCENDING)
 
 
-    def ScanComPorts (self):
-        store = gtk.ListStore (str)
-        cell = gtk.CellRendererText ()
-        self.ComPortsList.pack_start (cell, True)
-        self.ComPortsList.add_attribute (cell, 'text', 0)
+    def RefreshSerialPorts (self):
+        while not self.Dead:
+            spl = []
+            sph = 0
+            for order, port, desc, hwid in sorted (comports ()):
+                spl.append (port)
+                sph += hash (port)
 
-        for order, port, desc, hwid in sorted (comports ()):
+            if (sph == self.SerialPortsHash) or self.ButtonCancelUpload.get_visible ():
+                for n in range (10):
+                    if self.Dead:
+                        break
+                    time.sleep (0.1)
+                continue
+
+            gtk.gdk.threads_enter ()
+            self.UpdateSerialPorts (spl, sph)
+            gtk.gdk.threads_leave ()
+
+
+    def UpdateSerialPorts (self, spl=None, sph=None):
+        if spl is None:
+            spl = []
+            sph = 0
+            for order, port, desc, hwid in sorted (comports ()):
+                spl.append (port)
+                sph += hash (port)
+
+        store = self.SerialPortsList.get_model ()
+        if store is None:
+            selport = None
+
+            store = gtk.ListStore (str)
+            cell = gtk.CellRendererText ()
+            self.SerialPortsList.pack_start (cell, True)
+            self.SerialPortsList.add_attribute (cell, 'text', 0)
+            self.SerialPortsList.set_model (store)
+        else:
+            selport = self.SerialPortsList.get_active_text ()
+
+        store.clear ()
+        idx = 0
+        act = 0
+        for port in spl:
             store.append ([port])
+            if selport == port:
+                act = idx
+            idx += 1
+        self.SerialPortsList.set_active (act)
+        self.SerialPortsHash = sph
 
-        self.ComPortsList.set_model (store)
-        self.ComPortsList.set_active (0)
+        self.SetStatus (_("Serial ports list updated"))
 
 
     def UpdateProgress (self, pos = None, msg = None):
@@ -287,6 +337,7 @@ class Application:
 
         return self.LoadProfile (self.ProfileListStore [sel] [3])
 
+
 # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- #
 
 
@@ -305,7 +356,7 @@ class Application:
         if prof is None:
             return
 
-        serport = self.ComPortsList.get_active_text ()
+        serport = self.SerialPortsList.get_active_text ()
         if not serport:
             self.SetStatus (_("No serial port selected"))
             return
@@ -318,8 +369,11 @@ class Application:
         self.MainWindow.set_deletable (False)
 
         try:
-            if prof.Upload (serport, self.UpdateProgress):
+            ok = prof.Upload (serport, self.UpdateProgress)
+            if ok:
                 self.SetStatus (_("Settings uploaded successfully"))
+            else:
+                self.SetStatus (_("Upload cancelled"))
 
         except Exception, e:
             self.SetStatus (_("Upload failed: %(msg)s") % { "msg" : str (e) })

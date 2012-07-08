@@ -83,7 +83,9 @@ if __name__ == "__main__":
         from xpdm import gui
 
         app = gui.Application ("xpd")
+        gtk.gdk.threads_enter ()
         gtk.main ()
+        gtk.gdk.threads_leave ()
 
     except:
         import traceback

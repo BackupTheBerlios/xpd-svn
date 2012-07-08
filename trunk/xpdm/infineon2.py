@@ -684,15 +684,20 @@ class Profile (infineon.Profile):
 
         progress_func (msg = _("Waiting for controller ready"))
         # Send '8's and wait for the 'U' response
+        skip_write = False
         while True:
-            ser.write ('8')
+            if not skip_write:
+                ser.write ('8')
+            skip_write = False
+
             c = ser.read ()
             if c == 'U':
                 break
 
             if len (c) > 0:
-                if c != chr (0):
-                    raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c) })
+                # Garbage often comes from the controller upon bootup, just ignore it
+                ser.flushInput ()
+                skip_write = True
 
             if not progress_func ():
                 return False

@@ -14,8 +14,8 @@ def comports(available_only=True):
     (order, port, desc, hwid).  available_only is ignored for Windows compatibility,
     Order is a helper to get sorted lists. it can be ignored otherwise."""
     order = 1
-    for port in sorted (glob.glob('/dev/ttyS*') + glob.glob('/dev/ttyUSB*') + \
-                        glob.glob('/dev/ttyACM*')):
+    #glob.glob('/dev/ttyS*') + glob.glob('/dev/ttyACM*')
+    for port in sorted (glob.glob('/dev/ttyUSB*')):
         if available_only:
             try:
                 serial.Serial(port) # test open
