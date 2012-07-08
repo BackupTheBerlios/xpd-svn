@@ -665,10 +665,14 @@ class Profile (infineon.Profile):
             if not skip_write:
                 # Garbage often comes from the controller upon bootup, just ignore it
                 ser.flushInput ()
+                print "> 8"
                 ser.write ('8')
             skip_write = False
 
             c = ser.read ()
+            if c != None:
+                for i in c:
+                    print "< %02x (%c)" % (ord(i), i)
             if c == 'U':
                 break
 
@@ -680,11 +684,22 @@ class Profile (infineon.Profile):
 
         progress_func (msg = _("Waiting acknowledgement"))
 
+        import sys
+        print "Writing data"
+        for x in range (len (data)):
+            if ((x & 15) == 0):
+                sys.stdout.write ("\n%04x  " % x)
+            sys.stdout.write (" %02x " % data [x])
+        sys.stdout.write ("\n")
+
         ser.flushInput ()
         ser.write (str (data))
         ack = "QR"
         while True:
             c = ser.read ()
+            if c != None:
+                for i in c:
+                    print "< %02x (%c)" % (ord(i), i)
             while len (c) and (c [0] == ack [0]):
                 c = c [1:]
                 ack = ack [1:]
