@@ -11,6 +11,7 @@ import gtk
 import gobject
 import glib
 import gio
+import pango
 import threading
 import time
 from xpdm import VERSION, FNENC, comports, infineon, infineon2, infineon3
@@ -374,16 +375,21 @@ class Application:
         while gtk.events_pending ():
             gtk.main_iteration ()
 
-        self.UserHints.get_buffer ().set_text (_("""\
-Applying profile: %(prof)s
-Controller model: %(ctrl)s
-Serial port: %(port)s
+        self.UserHints.set_label (_("""\
+Applying profile: <b>%(prof)s</b>
+Controller model: <b>%(ctrl)s</b>
+Serial port: <b>%(port)s</b>
 
 Please connect the controller to the programming cable which, in turn, \
 must be connected to one of the computer's USB sockets. Once you're ready, \
 press the button on the programming cable and hold it steadily for \
 at least 10 seconds. You may release the button when this text is replaced \
-back with a list of existing controller profiles.\
+back with a list of existing controller profiles.
+
+If the controller programs only once (that is, when you're doing it second time, \
+the message "Waiting for controller ready" stays forever and program won't react \
+to the cable button) you will need to completely disconnect temporarily either \
+the controller from the cable, or the cable from the USB port.\
 """) % { "prof" : prof.Description, "ctrl" : prof.GetModel (), "port" : serport })
 
         try:
@@ -466,3 +472,10 @@ back with a list of existing controller profiles.\
 
         self.ParamVBox.foreach (self.ClearChildren, self.ParamVBox)
         prof.FillParameters (self.ParamVBox)
+
+
+    def on_UserHints_size_allocate (self, label, allocation):
+        layout = label.get_layout ()
+        new_width = (allocation.width - label.get_layout_offsets() [0] * 2) * pango.SCALE
+        if new_width != layout.get_width():
+            layout.set_width (new_width)

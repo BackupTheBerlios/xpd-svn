@@ -115,6 +115,33 @@ ControllerTypeDesc = \
         "Voltage2Raw"      : lambda U: U * 3.184,
         "Raw2Voltage"      : lambda R: R / 3.184,
     },
+    {
+        "Name"             : "EB306/CellMan",
+        "PhaseCurrent2Raw" : lambda I: (I * 0.624) - 6,
+        "Raw2PhaseCurrent" : lambda R: 9.6 + (1.6 * R),
+        "BattCurrent2Raw"  : lambda I: (I * 0.7) + 0.07,
+        "Raw2BattCurrent"  : lambda R: (1.43 * R) - 0.1,
+        "Voltage2Raw"      : lambda U: U * 3.184,
+        "Raw2Voltage"      : lambda R: R / 3.184,
+    },
+    {
+        "Name"             : "EB309/CellMan",
+        "PhaseCurrent2Raw" : lambda I: (I * 0.624) - 6,
+        "Raw2PhaseCurrent" : lambda R: 9.6 + (1.6 * R),
+        "BattCurrent2Raw"  : lambda I: (I * 0.7) + 0.07,
+        "Raw2BattCurrent"  : lambda R: (1.43 * R) - 0.1,
+        "Voltage2Raw"      : lambda U: U * 3.184,
+        "Raw2Voltage"      : lambda R: R / 3.184,
+    },
+    {
+        "Name"             : "EB312/CellMan",
+        "PhaseCurrent2Raw" : lambda I: ((I * 0.624) - 6) / 2,
+        "Raw2PhaseCurrent" : lambda R: (9.6 + (1.6 * R)) * 2,
+        "BattCurrent2Raw"  : lambda I: ((I * 0.7) + 0.07) / 2,
+        "Raw2BattCurrent"  : lambda R: ((1.43 * R) - 0.1) * 2,
+        "Voltage2Raw"      : lambda U: U * 3.184,
+        "Raw2Voltage"      : lambda R: R / 3.184,
+    },
 ];
 
 

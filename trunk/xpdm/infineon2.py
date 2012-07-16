@@ -123,6 +123,7 @@ ControllerTypeDesc = \
         "Raw2Voltage"      : lambda R: R / 3.281,
     },
     {
+        # According to Lyen, shunt value for EB206 is 4 milliohm
         "Name"             : "EB206/Lyen",
         "PhaseCurrent2Raw" : lambda I: I * 1.25 - 0.2,
         "Raw2PhaseCurrent" : lambda R: 0.16 + (0.8 * R),
@@ -192,6 +193,16 @@ ControllerTypeDesc = \
         "Voltage2Raw"      : lambda U: U * 3.281,
         "Raw2Voltage"      : lambda R: R / 3.281,
         "Byte23"           : 80,
+    },
+    {
+        # According to methods, shunt value is 0.23 mOhm
+        "Name"             : "EB218/Crystalyte",
+        "PhaseCurrent2Raw" : lambda I: (I * 0.187 - 0.1) / 2.0,
+        "Raw2PhaseCurrent" : lambda R: (0.5348 + (5.3476 * R)) * 2.0,
+        "BattCurrent2Raw"  : lambda I: (I * 0.213 + 0.1) / 2.0,
+        "Raw2BattCurrent"  : lambda R: ((4.695 * R) - 0.469) * 2.0,
+        "Voltage2Raw"      : lambda U: (U * 3.281) / 1.2,
+        "Raw2Voltage"      : lambda R: (R / 3.281) * 1.2,
     },
 ];
 

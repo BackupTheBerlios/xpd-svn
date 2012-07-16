@@ -429,15 +429,15 @@ You should have received a copy of the GNU General Public License along with thi
           </packing>
         </child>
         <child>
-          <object class="GtkTextView" id="UserHints">
-            <property name="can_focus">True</property>
-            <property name="border_width">5</property>
-            <property name="pixels_above_lines">4</property>
-            <property name="pixels_below_lines">4</property>
-            <property name="pixels_inside_wrap">4</property>
-            <property name="editable">False</property>
-            <property name="wrap_mode">word</property>
-            <property name="cursor_visible">False</property>
+          <object class="GtkLabel" id="UserHints">
+            <property name="can_focus">False</property>
+            <property name="xalign">0</property>
+            <property name="xpad">5</property>
+            <property name="ypad">5</property>
+            <property name="use_markup">True</property>
+            <property name="wrap">True</property>
+            <property name="track_visited_links">False</property>
+            <signal name="size-allocate" handler="on_UserHints_size_allocate" swapped="no"/>
           </object>
           <packing>
             <property name="expand">True</property>

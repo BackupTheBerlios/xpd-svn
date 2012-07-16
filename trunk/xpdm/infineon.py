@@ -251,8 +251,8 @@ class Profile:
             data.append (int (x))
 
         # temporary hack until someone finds out what means the 23th byte
-        if "Byte23" in self.ControllerTypeDesc [self.ControllerType]:
-            data [23] = self.ControllerTypeDesc [self.ControllerType]["Byte23"]
+        if "Byte23" in self.ControllerTypeDesc [self.ControllerType - 1]:
+            data [23] = self.ControllerTypeDesc [self.ControllerType - 1]["Byte23"]
 
         crc = 0
         for x in data:
