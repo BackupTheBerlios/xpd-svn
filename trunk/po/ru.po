@@ -556,16 +556,12 @@ msgstr "Ожидание готовности контроллера"
 msgid "Waiting acknowledgement"
 msgstr "Ожидание подтверждения"
 
-#: xpdm/infineon3.py:723
-msgid "Controller says received data is broken"
-msgstr "Контроллер получил испорченные данные"
-
-#: xpdm/infineon3.py:724 xpdm/infineon2.py:722
+#: xpdm/infineon3.py:722 xpdm/infineon2.py:722
 #, python-format
 msgid "Invalid reply byte '%(chr)02x'"
 msgstr "Неверный ответный байт '%(chr)02x'"
 
-#: xpdm/infineon3.py:745
+#: xpdm/infineon3.py:743
 msgid "Infineon 3"
 msgstr "Инфинеон 3"
 
@@ -797,3 +793,6 @@ msgstr ""
 "Пожалуйста, передайте мою предсмертную записку автору:\n"
 "\n"
 "%(msg)s"
+
+#~ msgid "Controller says received data is broken"
+#~ msgstr "Контроллер получил испорченные данные"

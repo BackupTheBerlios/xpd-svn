@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: XPD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-16 19:52+0300\n"
-"PO-Revision-Date: 2012-07-09 12:54+0100\n"
+"PO-Revision-Date: 2012-07-31 11:11+0100\n"
 "Last-Translator: Maximilian Federle <max.federle@googlemail.com>\n"
 "Language-Team: Max Federle <max.federle@googlemail.com>\n"
 "Language: \n"
@@ -136,11 +136,11 @@ msgstr "Unbegrenzt"
 
 #: xpdm/infineon3.py:50 xpdm/infineon2.py:49
 msgid "Low"
-msgstr "Niedrig"
+msgstr "Low"
 
 #: xpdm/infineon3.py:50 xpdm/infineon2.py:49
 msgid "High"
-msgstr "Hoch"
+msgstr "High"
 
 #: xpdm/infineon3.py:56 xpdm/infineon2.py:55
 msgid "Enabled"
@@ -369,7 +369,7 @@ msgstr "s"
 
 #: xpdm/infineon3.py:383 xpdm/infineon2.py:439
 msgid "Auto cruising time"
-msgstr "Auto Cruising Schwelle"
+msgstr "Tempomat Schwelle"
 
 #: xpdm/infineon3.py:384 xpdm/infineon2.py:440
 msgid ""
@@ -378,8 +378,8 @@ msgid ""
 "contact on the board to ground."
 msgstr ""
 "Die Anzahl der Sekunden, die Sie den Gasgriff unverändert halten müssen, um "
-"den \"Cruising\"-Modus zu aktivieren. Damit dies funktioniert, müssen Sie "
-"den \"CR\"-Kontakt auf dem Board mit Masse (GND) verbinden."
+"den Tempomat-Modus zu aktivieren. Damit dies funktioniert, müssen Sie den "
+"\"CR\"-Kontakt auf dem Board mit Masse (GND) verbinden."
 
 #: xpdm/infineon3.py:400 xpdm/infineon2.py:456
 msgid "Slip charge mode"
@@ -404,7 +404,8 @@ msgstr "Limit cruise"
 #: xpdm/infineon3.py:416
 msgid "So far it is unknown how this parameter affects controller function."
 msgstr ""
-"Es ist bisher nicht bekannt wie diese Einstellung den Controller beeinflusst."
+"Es ist bisher nicht bekannt, wie diese Einstellung den Controller "
+"beeinflusst."
 
 #: xpdm/infineon3.py:428 xpdm/infineon2.py:471
 msgid "LED indicator mode"
@@ -577,16 +578,12 @@ msgstr "Warte auf Controller..."
 msgid "Waiting acknowledgement"
 msgstr "Warte auf Bestätigung..."
 
-#: xpdm/infineon3.py:723
-msgid "Controller says received data is broken"
-msgstr "Controller sagt empfangenen Daten unterbrochen wird"
-
-#: xpdm/infineon3.py:724 xpdm/infineon2.py:722
+#: xpdm/infineon3.py:722 xpdm/infineon2.py:722
 #, python-format
 msgid "Invalid reply byte '%(chr)02x'"
 msgstr "Ungültige Antwort:  '%(chr)02x'"
 
-#: xpdm/infineon3.py:745
+#: xpdm/infineon3.py:743
 msgid "Infineon 3"
 msgstr "Infineon 3"
 
@@ -738,7 +735,7 @@ msgid "Uploading settings to controller"
 msgstr "Übertrage Einstellungen auf den Controller"
 
 #: xpdm/gui.py:378
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Applying profile: <b>%(prof)s</b>\n"
 "Controller model: <b>%(ctrl)s</b>\n"
@@ -762,7 +759,7 @@ msgstr ""
 "\n"
 "Bitte verbinden Sie den Controller mit dem Programmierkabel, welches bereits "
 "mit einem USB-Port des Computers verbunden sein sollte. Anschließend drücken "
-"Sie den Schalter des Programmierkabels und halten ihn fürst mindestens 10 "
+"Sie den Schalter des Programmierkabels und halten ihn für mindestens 10 "
 "Sekunden gedrückt. Sie können den Schalter loslassen sobald die Übertragung "
 "abgeschlossen ist, also sobald dieser Erklärungstext wieder verschwindet."
 
@@ -817,3 +814,6 @@ msgstr ""
 "senden Sie die folgenden Informationen dem Author des Programmes:\n"
 "\n"
 "%(msg)s"
+
+#~ msgid "Controller says received data is broken"
+#~ msgstr "Der Controller meldet, dass die übertragenen Daten fehlerhaft sind."
