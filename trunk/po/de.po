@@ -578,12 +578,16 @@ msgstr "Warte auf Controller..."
 msgid "Waiting acknowledgement"
 msgstr "Warte auf Bestätigung..."
 
-#: xpdm/infineon3.py:722 xpdm/infineon2.py:722
+#: xpdm/infineon3.py:723
+msgid "Controller says received data is broken"
+msgstr "Der Controller meldet, dass die übertragenen Daten fehlerhaft sind."
+
+#: xpdm/infineon3.py:724 xpdm/infineon2.py:722
 #, python-format
 msgid "Invalid reply byte '%(chr)02x'"
 msgstr "Ungültige Antwort:  '%(chr)02x'"
 
-#: xpdm/infineon3.py:743
+#: xpdm/infineon3.py:745
 msgid "Infineon 3"
 msgstr "Infineon 3"
 
@@ -814,6 +818,3 @@ msgstr ""
 "senden Sie die folgenden Informationen dem Author des Programmes:\n"
 "\n"
 "%(msg)s"
-
-#~ msgid "Controller says received data is broken"
-#~ msgstr "Der Controller meldet, dass die übertragenen Daten fehlerhaft sind."

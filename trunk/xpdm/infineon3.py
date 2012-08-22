@@ -719,6 +719,8 @@ class Profile (infineon.Profile):
                     return True
 
             if len (c) > 0:
+                if c [0] == chr (0xa2):
+                    raise Exception (_("Controller says received data is broken"))
                 raise Exception (_("Invalid reply byte '%(chr)02x'") % { "chr" : ord (c [0]) })
 
             if not progress_func ():
