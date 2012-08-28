@@ -1,3 +1,16 @@
+xpd (0.3.1-1ubuntu1) lucid; urgency=low
+
+  * Added Infineon 3 support! Both "stock" and "CellMan" variants are supported.
+  * Fixed a long-standing bug that caused XPD to abnormally exit when trying to
+    program last controller in internal list (in older version that was
+    EB232/Lyen).
+  * The serial port list is updated in real time now, at least on Linux
+  * Some changes in interface to make it even more end-user friendly
+  * Added support for "Crystalyte" EB218 controller
+  * German translation by Maximilian Federle <max.federle@googlemail.com>
+
+ -- Andrew Zabolotny <zap@cobra.ru>  Wed, 29 Aug 2012 00:41:28 +0400
+
 xpd (0.2.2-1) unstable; urgency=low
 
   * Added the "Unlimited" EBS level (undocumented feature).
