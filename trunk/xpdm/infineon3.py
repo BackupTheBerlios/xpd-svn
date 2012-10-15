@@ -143,7 +143,7 @@ ControllerTypeDesc = \
         "Raw2Voltage"      : lambda R: R / 3.184,
     },
     {
-        "Name"             : "EB318",
+        "Name"             : "EB318/CellMan",
         "PhaseCurrent2Raw" : lambda I: (I * 0.416 - 11.9) / 2,
         "Raw2PhaseCurrent" : lambda R: (28.6 + (2.4 * R)) * 2,
         "BattCurrent2Raw"  : lambda I: ((I * 0.467) + 0.03) / 2,
