@@ -195,12 +195,13 @@ ControllerTypeDesc = \
         "Byte23"           : 80,
     },
     {
-        # According to methods, shunt value is 0.23 mOhm
+        # According to methods, shunt value is 0.23 mOhm,
+        # and is twice smaller than the stock shunt in EB218
         "Name"             : "EB218/Crystalyte",
-        "PhaseCurrent2Raw" : lambda I: (I * 0.187 - 0.1) / 2,
-        "Raw2PhaseCurrent" : lambda R: (0.5348 + (5.3476 * R)) * 2,
-        "BattCurrent2Raw"  : lambda I: (I * 0.213 + 0.1) / 2,
-        "Raw2BattCurrent"  : lambda R: ((4.695 * R) - 0.469) * 2,
+        "PhaseCurrent2Raw" : lambda I: (I * 0.0935) - 0.05,
+        "Raw2PhaseCurrent" : lambda R: 0.5348 + (10.6952 * R),
+        "BattCurrent2Raw"  : lambda I: (I * 0.1065) + 0.05,
+        "Raw2BattCurrent"  : lambda R: (9.3897 * R) - 0.469,
         "Voltage2Raw"      : lambda U: (U * 3.281) / 1.2,
         "Raw2Voltage"      : lambda R: (R / 3.281) * 1.2,
     },

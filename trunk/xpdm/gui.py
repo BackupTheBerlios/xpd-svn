@@ -53,8 +53,6 @@ class Application:
         except RuntimeError, e:
             raise SystemExit (str (e))
 
-        self.builder.connect_signals (self);
-
         # Cache most used widgets into variables
         for widget in "MainWindow", "AboutDialog", "StatusBar", "SerialPortsList", \
             "ProfileList", "EditProfileDialog", "ProfileName", "ParamDescLabel", \
