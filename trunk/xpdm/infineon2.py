@@ -58,7 +58,7 @@ ThrottleProtectDesc = [ _("Disabled"), _("Enabled") ]
 PAS_FAST = 0
 PAS_SLOW = 1
 
-PASModeDesc = [ _("Fast"), _("Slow") ]
+PASModeDesc = [ _("Fast (~3s)"), _("Slow (~1s)") ]
 
 # P3 LED indicator mode
 P3M_CRUISE = 0
@@ -556,7 +556,7 @@ full-throttle condition, which might be not very pleasant.\
         "Type"        : "i",
         "Name"        : _("PAS mode"),
         "Description" : _("""\
-Pedal Assisted Sensor mode.\
+The time motor is running after last PAS impulse.\
 """),
         "Default"     : PAS_FAST,
         "Widget"      : infineon.PWT_COMBOBOX,
