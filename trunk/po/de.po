@@ -600,12 +600,12 @@ msgid "164 Mode P1-DAT P2-CLK"
 msgstr "164 Modus P1-DAT P2-CLK"
 
 #: xpdm/infineon2.py:61
-msgid "Fast (~3s)"
-msgstr "Schnell (~3s)"
+msgid "Long (~3s)"
+msgstr "Lang (~3s)"
 
 #: xpdm/infineon2.py:61
-msgid "Slow (~1s)"
-msgstr "Langsam (~1s)"
+msgid "Short (~1s)"
+msgstr "Kurz (~1s)"
 
 #: xpdm/infineon2.py:67
 msgid "Cruise"

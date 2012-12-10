@@ -578,12 +578,12 @@ msgid "164 Mode P1-DAT P2-CLK"
 msgstr ""
 
 #: xpdm/infineon2.py:61
-msgid "Fast (~3s)"
-msgstr "Быстро (~3с)"
+msgid "Long (~3s)"
+msgstr "Долго (~3с)"
 
 #: xpdm/infineon2.py:61
-msgid "Slow (~1s)"
-msgstr "Медленно (~1с)"
+msgid "Short (~1s)"
+msgstr "Кратко (~1с)"
 
 #: xpdm/infineon2.py:67
 msgid "Cruise"
@@ -625,7 +625,7 @@ msgstr ""
 
 #: xpdm/infineon2.py:558
 msgid "The time motor is running after last PAS impulse."
-msgstr "Время, на протяжении которого мотор работает после последнего импульса от датчика"
+msgstr "Длительность работы мотора после последнего импульса от датчика"
 
 #: xpdm/infineon2.py:570
 msgid "P3 mode"
