@@ -1,7 +1,7 @@
 %{!?python_site: %define python_site %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(0)")}
 
 Name:           xpd
-Version:        0.3.2
+Version:        0.3.3
 Release:        1%{?dist}
 Summary:        Infineon e-bike controller setup tool
 Group:          Applications/Engineering

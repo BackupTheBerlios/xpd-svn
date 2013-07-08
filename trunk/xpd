@@ -66,6 +66,7 @@ if __name__ == "__main__":
         # Set the translation domain for libintl (Python uses its own locale library)
         try:
             locale.bindtextdomain ("xpd", localedir)
+            locale.bind_textdomain_codeset ("xpd", 'utf-8')
         except AttributeError:
             # hack: windows locale doesn't contain bindtextdomain
             import ctypes
@@ -82,8 +83,9 @@ if __name__ == "__main__":
         # Load the GUI now so that translation of global statics will work
         from xpdm import gui
 
-        app = gui.Application ("xpd")
+        app = gui.Application ()
         gtk.gdk.threads_enter ()
+        app.Initialize ("xpd")
         gtk.main ()
         gtk.gdk.threads_leave ()
 

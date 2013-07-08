@@ -4,6 +4,7 @@
 
 import serial
 import time
+import locale
 from xpdm import infineon
 
 # -- # Constants # -- #
@@ -691,8 +692,11 @@ class Profile (infineon.Profile):
     def Upload (self, com_port, progress_func):
         data = self.BuildRaw ()
 
-        ser = serial.Serial (com_port, 38400, serial.EIGHTBITS, serial.PARITY_NONE,
-            serial.STOPBITS_TWO, timeout=0.2)
+        try:
+            ser = serial.Serial (com_port, 38400, serial.EIGHTBITS, serial.PARITY_NONE,
+                serial.STOPBITS_TWO, timeout=0.2)
+        except serial.SerialException, e:
+            raise serial.SerialException (str (e).decode (locale.getpreferredencoding ()))
 
         progress_func (msg = _("Waiting for controller ready"))
         # Send '8's and wait for the 'U' response

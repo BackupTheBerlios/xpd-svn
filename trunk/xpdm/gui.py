@@ -14,6 +14,7 @@ import gio
 import pango
 import threading
 import time
+import locale
 from xpdm import VERSION, FNENC, comports, infineon, infineon2, infineon3
 
 
@@ -21,7 +22,7 @@ from xpdm import VERSION, FNENC, comports, infineon, infineon2, infineon3
 #                          The GUI application class
 #-----------------------------------------------------------------------------
 class Application:
-    def __init__ (self, textdomain):
+    def __init__ (self):
         gtk.gdk.threads_init ()
 
         self.Dead = False
@@ -41,10 +42,12 @@ class Application:
         if not os.path.exists (self.DATADIR):
             raise SystemExit, _("FATAL: Could not find data directory")
 
-        self.CONFIGDIR = os.path.join (glib.get_user_data_dir ().decode (FNENC), "xpd")
+        self.CONFIGDIR = os.path.join (glib.get_user_data_dir (), "xpd").decode ('utf-8')
         if not os.access (self.CONFIGDIR, os.F_OK):
             os.makedirs (self.CONFIGDIR, 0700)
 
+
+    def Initialize (self, textdomain):
         # Load the widgets from the GtkBuilder file
         self.builder = gtk.Builder ()
         self.builder.set_translation_domain (textdomain);
@@ -264,12 +267,19 @@ class Application:
                 sel = model [sel] [2]
 
         self.ProfileListStore.clear ()
-        for x in glob.glob (os.path.join (self.DATADIR, "*.asv")) + \
-                 glob.glob (os.path.join (self.CONFIGDIR, "*.asv")):
+        # Python bug: glob() with unicode argument will use locale.getpreferredencoding()
+        # for file name encoding, which is not compatible with glib filename encodings
+        for x in glob.glob (os.path.join (self.DATADIR.encode (FNENC), "*.asv")) + \
+                 glob.glob (os.path.join (self.CONFIGDIR.encode (FNENC), "*.asv")):
             try:
-                prof = self.LoadProfile (x)
+                prof = self.LoadProfile (x.decode (FNENC))
                 self.ProfileListStore.append ( \
-                    (prof.Family, prof.GetModel (), prof.Description, prof.FileName))
+                    (prof.Family, prof.GetModel (), prof.Description,
+                     prof.FileName.decode (FNENC)))
+            except IOError, e:
+                self.Message (gtk.MESSAGE_WARNING, \
+                    _("Failed to load profile %(fn)s:\n%(msg)s") % \
+                    { "fn" : x, "msg" : unicode (e.strerror, locale.getpreferredencoding(), 'replace') })
             except ValueError, e:
                 self.Message (gtk.MESSAGE_WARNING, \
                     _("Failed to load profile %(fn)s:\n%(msg)s") % \
@@ -306,7 +316,7 @@ class Application:
 
 
     def LoadProfile (self, fn):
-        f = file (fn, "r")
+        f = file (fn.encode (FNENC), "r")
         l = f.readlines ()
         prof = None
         for fam in infineon.Families:
@@ -335,7 +345,7 @@ class Application:
             self.SetStatus (_("No profile selected"))
             return None
 
-        return self.LoadProfile (self.ProfileListStore [sel] [3])
+        return self.LoadProfile (self.ProfileListStore [sel] [3].decode ('utf-8'))
 
 
 # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- #
@@ -390,6 +400,7 @@ to the cable button) you will need to completely disconnect temporarily either \
 the controller from the cable, or the cable from the USB port.\
 """) % { "prof" : prof.Description, "ctrl" : prof.GetModel (), "port" : serport })
 
+        msg = None
         try:
             ok = prof.Upload (serport, self.UpdateProgress)
             if ok:
@@ -398,6 +409,9 @@ the controller from the cable, or the cable from the USB port.\
                 self.SetStatus (_("Upload cancelled"))
 
         except Exception, e:
+            msg = str (e)
+
+        if msg != None:
             self.SetStatus (_("Upload failed: %(msg)s") % { "msg" : str (e) })
 
         self.MainWindow.set_deletable (True)

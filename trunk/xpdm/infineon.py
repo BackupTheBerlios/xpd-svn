@@ -6,6 +6,7 @@ import os
 import gtk
 import ctypes
 import math
+from xpdm import FNENC
 
 # Parameter widget types for editing
 PWT_COMBOBOX = 0
@@ -44,16 +45,20 @@ class Profile:
 
 
     def SetFileName (self, fn):
+        self.Description = os.path.splitext (os.path.basename (fn)) [0]
+
+        fn = fn.encode (FNENC)
+
         # If file with old name exists, rename it
         if (self.FileName != None) and os.access (self.FileName, os.R_OK):
             os.rename (self.FileName, fn)
 
         self.FileName = fn
-        self.Description = os.path.splitext (os.path.basename (fn)) [0]
 
 
     def SetDescription (self, desc):
-        self.SetFileName (os.path.join (os.path.dirname (self.FileName), desc + ".asv"))
+        self.SetFileName (os.path.join (
+            os.path.dirname (self.FileName).decode (FNENC), desc + ".asv"))
 
 
     def Load (self, fn, lines):
