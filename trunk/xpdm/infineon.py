@@ -44,14 +44,15 @@ class Profile:
             setattr (self, parm, desc ["Default"])
 
 
-    def SetFileName (self, fn):
+    def SetFileName (self, fn, rename = True):
         self.Description = os.path.splitext (os.path.basename (fn)) [0]
 
         fn = fn.encode (FNENC)
 
-        # If file with old name exists, rename it
-        if (self.FileName != None) and os.access (self.FileName, os.R_OK):
-            os.rename (self.FileName, fn)
+        if rename:
+            # If file with old name exists, rename it
+            if (self.FileName != None) and os.access (self.FileName, os.R_OK):
+                os.rename (self.FileName, fn)
 
         self.FileName = fn
 

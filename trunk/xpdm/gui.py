@@ -428,7 +428,7 @@ the controller from the cable, or the cable from the USB port.\
 
     def on_ButtonCreate_clicked (self, but):
         prof = infineon.Families [0][1] ( \
-            infineon.Families [0][0], os.path.join (self.CONFIGDIR, _("New profile")))
+            infineon.Families [0][0], os.path.join (self.CONFIGDIR, _("New profile").decode ("utf-8")))
         prof.SetDescription (prof.Description)
         self.EditProfile (prof, self.GetSelectedProfile ())
 
@@ -438,9 +438,8 @@ the controller from the cable, or the cable from the USB port.\
         if prof is None:
             return
 
-        newdesc = _("New ") + prof.Description
-        prof.FileName = os.path.join (self.CONFIGDIR, newdesc)
-        prof.SetDescription (newdesc)
+        prof.SetFileName (os.path.join (self.CONFIGDIR, _("New ").decode ("utf-8") + \
+            prof.Description + ".asv"), False)
         self.EditProfile (prof, self.GetSelectedProfile ())
 
 
@@ -478,7 +477,7 @@ the controller from the cable, or the cable from the USB port.\
         if fam [0] == self.ActiveProfile.Family:
             return
 
-        prof = fam [1] (fam [0], self.ActiveProfile.FileName)
+        prof = fam [1] (fam [0], self.ActiveProfile.FileName.decode (FNENC))
         prof.CopyParameters (self.ActiveProfile)
         self.ActiveProfile = prof
 
