@@ -15,7 +15,7 @@ all:
 install:
 	python setup.py install
 
-win-install:
+win-dist:
 	rm -rf xpd-$(VERSION)
 	mkdir xpd-$(VERSION)
 	python setup.py install -O1 --root xpd-$(VERSION)
