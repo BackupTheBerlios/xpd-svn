@@ -12,7 +12,6 @@ import gobject
 import glib
 import gio
 import pango
-import threading
 import time
 import locale
 from xpdm import VERSION, FNENC, comports, infineon, infineon2, infineon3
@@ -23,8 +22,6 @@ from xpdm import VERSION, FNENC, comports, infineon, infineon2, infineon3
 #-----------------------------------------------------------------------------
 class Application:
     def __init__ (self):
-        gtk.gdk.threads_init ()
-
         self.Dead = False
         self.ActiveProfile = None
 
@@ -85,8 +82,12 @@ class Application:
         # Dynamic serial port list update worker
         self.SerialPortsHash = None
         self.UpdateSerialPorts ()
-        self.SerialPortsThread = threading.Thread (target=self.RefreshSerialPorts)
-        self.SerialPortsThread.start ()
+        glib.timeout_add_seconds (1, self.RefreshSerialPorts)
+
+        # Enable image buttons on Windows; on Linux you can change it via preferences
+        if os.name == "nt":
+            settings = gtk.settings_get_default ()
+            settings.set_property ("gtk-button-images", True)
 
         self.MainWindow.show ()
 
@@ -141,31 +142,29 @@ class Application:
 
 
     def RefreshSerialPorts (self):
-        while not self.Dead:
-            if not self.ButtonCancelUpload.get_visible ():
-                spl = []
-                sph = 0
-                for order, port, desc, hwid in sorted (comports (False)):
-                    spl.append (port)
-                    sph += hash (port)
+        if self.Dead:
+            return False
+        if self.ButtonCancelUpload.get_visible ():
+            return True
 
-            if (sph == self.SerialPortsHash) or self.ButtonCancelUpload.get_visible ():
-                for n in range (10):
-                    if self.Dead:
-                        break
-                    time.sleep (0.1)
-                continue
+        spl = []
+        sph = 0
+        for order, port, desc, hwid in sorted (comports ()):
+            spl.append (port)
+            sph += hash (port)
 
-            gtk.gdk.threads_enter ()
-            self.UpdateSerialPorts (spl, sph)
-            gtk.gdk.threads_leave ()
+        if (sph == self.SerialPortsHash):
+            return True
+
+        self.UpdateSerialPorts (spl, sph)
+        return True
 
 
     def UpdateSerialPorts (self, spl=None, sph=None):
         if spl is None:
             spl = []
             sph = 0
-            for order, port, desc, hwid in sorted (comports (False)):
+            for order, port, desc, hwid in sorted (comports ()):
                 spl.append (port)
                 sph += hash (port)
 

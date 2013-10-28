@@ -16,11 +16,12 @@ def comports(available_only=True):
     order = 1
     # Common Unix USB serial device names
     for port in sorted (glob.glob('/dev/ttyUSB*') + glob.glob('/dev/tty.usbserial*')):
-        if available_only:
-            try:
-                serial.Serial(port) # test open
-            except serial.serialutil.SerialException:
-                continue
+        # this would give wrong results on opened com ports
+        #if available_only:
+        #    try:
+        #        serial.Serial(port) # test open
+        #    except serial.serialutil.SerialException:
+        #        continue
 
         yield order, port, "", ""
         order += 1
