@@ -79,6 +79,7 @@ ControllerTypeDesc = \
         "Raw2BattCurrent"  : lambda R: (0.71 * R) - 0.1,
         "Voltage2Raw"      : lambda U: U * 3.184,
         "Raw2Voltage"      : lambda R: R / 3.184,
+        "ControllerType"   : 1,
     },
     {
         "Name"             : "EB309",
@@ -88,6 +89,7 @@ ControllerTypeDesc = \
         "Raw2BattCurrent"  : lambda R: (0.71 * R) - 0.1,
         "Voltage2Raw"      : lambda U: U * 3.184,
         "Raw2Voltage"      : lambda R: R / 3.184,
+        "ControllerType"   : 2,
     },
     {
         "Name"             : "EB312",
@@ -97,6 +99,7 @@ ControllerTypeDesc = \
         "Raw2BattCurrent"  : lambda R: (1.43 * R) - 0.1,
         "Voltage2Raw"      : lambda U: U * 3.184,
         "Raw2Voltage"      : lambda R: R / 3.184,
+        "ControllerType"   : 3,
     },
     {
         "Name"             : "EB315",
@@ -106,6 +109,7 @@ ControllerTypeDesc = \
         "Raw2BattCurrent"  : lambda R: (1.43 * R) - 0.1,
         "Voltage2Raw"      : lambda U: U * 3.184,
         "Raw2Voltage"      : lambda R: R / 3.184,
+        "ControllerType"   : 4,
     },
     {
         "Name"             : "EB318",
@@ -115,6 +119,7 @@ ControllerTypeDesc = \
         "Raw2BattCurrent"  : lambda R: (2.14 * R) - 0.06,
         "Voltage2Raw"      : lambda U: U * 3.184,
         "Raw2Voltage"      : lambda R: R / 3.184,
+        "ControllerType"   : 5,
     },
     {
         "Name"             : "EB306/CellMan",
@@ -124,6 +129,7 @@ ControllerTypeDesc = \
         "Raw2BattCurrent"  : lambda R: (1.43 * R) - 0.1,
         "Voltage2Raw"      : lambda U: U * 3.184,
         "Raw2Voltage"      : lambda R: R / 3.184,
+        "ControllerType"   : 1,
     },
     {
         "Name"             : "EB309/CellMan",
@@ -133,6 +139,7 @@ ControllerTypeDesc = \
         "Raw2BattCurrent"  : lambda R: (1.43 * R) - 0.1,
         "Voltage2Raw"      : lambda U: U * 3.184,
         "Raw2Voltage"      : lambda R: R / 3.184,
+        "ControllerType"   : 2,
     },
     {
         "Name"             : "EB312/CellMan",
@@ -142,6 +149,7 @@ ControllerTypeDesc = \
         "Raw2BattCurrent"  : lambda R: (2.86 * R) - 0.1,
         "Voltage2Raw"      : lambda U: U * 3.184,
         "Raw2Voltage"      : lambda R: R / 3.184,
+        "ControllerType"   : 3,
     },
     {
         "Name"             : "EB318/CellMan",
@@ -151,6 +159,7 @@ ControllerTypeDesc = \
         "Raw2BattCurrent"  : lambda R: (4.28 * R) - 0.06,
         "Voltage2Raw"      : lambda U: U * 3.184,
         "Raw2Voltage"      : lambda R: R / 3.184,
+        "ControllerType"   : 5,
     },
 ];
 
@@ -171,6 +180,7 @@ have a non-standard controller, you may create your own type in infineon.py\
         "Widget"      : infineon.PWT_COMBOBOX,
         "Range"       : (1, len (ControllerTypeDesc)),
         "GetDisplay"  : lambda prof, v: ControllerTypeDesc [v - 1]["Name"],
+        "ToRaw"       : lambda prof, v: v,
     },
 
     "PhaseCurrent" :
@@ -677,7 +687,7 @@ class Profile (infineon.Profile):
         "SensorAngle",
         "PASMaxSpeed",
         "LimitCruise",
-        3,
+        "ControllerType",
         0,
         0,
         0,
